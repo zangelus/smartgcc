@@ -13,7 +13,7 @@
     <children>
       <SplitPane dividerPositions="0.5" layoutX="1.0" layoutY="14.0" orientation="VERTICAL" prefHeight="409.0" prefWidth="427.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="191.0" prefWidth="409.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#handleBtnSelectUser" prefHeight="191.0" prefWidth="409.0">
                <children>
                   <TextField fx:id="textfield1" layoutX="99.0" layoutY="49.0" prefHeight="25.0" prefWidth="278.0" />
                   <Button layoutX="27.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleBtnBrowse" text="Browse" />
@@ -22,6 +22,7 @@
                   <Button layoutX="322.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleBtnBuild" prefHeight="25.0" prefWidth="55.0" text="Build" />
                     <Button fx:id="button" layoutX="247.0" layoutY="85.0" onAction="#handleBtnCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel" />
                     <Label fx:id="label" layoutX="148.0" layoutY="89.0" minHeight="16" minWidth="69" />
+                  <Button layoutX="165.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleBtnSelectUser" text="Select user" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
