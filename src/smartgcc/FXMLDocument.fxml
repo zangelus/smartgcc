@@ -3,19 +3,51 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="242.0" prefWidth="427.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="smartgcc.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="406.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smartgcc.FXMLDocumentController">
     <children>
-        <Button fx:id="button" layoutX="261.0" layoutY="100.0" onAction="#handleBtnCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel" />
-        <Label fx:id="label" layoutX="170.0" layoutY="104.0" minHeight="16" minWidth="69" />
-      <Button layoutX="35.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBtnBrowse" text="Browse" />
-      <Button layoutX="344.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleBtnBuild" prefHeight="25.0" prefWidth="55.0" text="Build" />
-      <ListView fx:id="listview1" layoutX="122.0" layoutY="20.0" prefHeight="25.0" prefWidth="278.0" />
-      <Label layoutX="35.0" layoutY="61.0" text="Output name" />
-      <TextField fx:id="textfield1" layoutX="122.0" layoutY="57.0" prefHeight="25.0" prefWidth="278.0" />
-      <Label layoutX="31.0" layoutY="125.0" text="Output Window" />
-      <ListView fx:id="listview2" layoutX="31.0" layoutY="142.0" prefHeight="88.0" prefWidth="370.0" />
+      <SplitPane dividerPositions="0.5" layoutX="1.0" layoutY="14.0" orientation="VERTICAL" prefHeight="409.0" prefWidth="427.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="191.0" prefWidth="409.0">
+               <children>
+                  <TextField fx:id="textfield1" layoutX="99.0" layoutY="49.0" prefHeight="25.0" prefWidth="278.0" />
+                  <Button layoutX="27.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleBtnBrowse" text="Browse" />
+                  <ListView fx:id="listview1" layoutX="99.0" layoutY="13.0" prefHeight="25.0" prefWidth="278.0" />
+                  <Label layoutX="19.0" layoutY="53.0" text="Output name" />
+                  <Button layoutX="322.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleBtnBuild" prefHeight="25.0" prefWidth="55.0" text="Build" />
+                    <Button fx:id="button" layoutX="247.0" layoutY="85.0" onAction="#handleBtnCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel" />
+                    <Label fx:id="label" layoutX="148.0" layoutY="89.0" minHeight="16" minWidth="69" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label layoutX="15.0" layoutY="14.0" text="Output Window" />
+                  <TabPane prefHeight="200.0" prefWidth="425.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Output window">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ListView fx:id="listview2" prefHeight="172.0" prefWidth="425.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Debug">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
     </children>
 </AnchorPane>
