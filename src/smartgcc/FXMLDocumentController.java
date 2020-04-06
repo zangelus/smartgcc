@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -44,9 +45,25 @@ public class FXMLDocumentController implements Initializable {
     private File MainFile;
     @FXML
     private ListView<String> listview2;
+    @FXML
+    private Menu menuCompile;
+    @FXML
+    private Menu menuLink;
+    @FXML
+    private Menu menuDebug;
+    @FXML
+    private Menu menuCodeGeneration;
+    @FXML
+    private Menu menuDeveloperOptions;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        menuCompile.setVisible(true);
+        menuLink.setVisible(true);
+        menuDebug.setVisible(true);
+        menuCodeGeneration.setVisible(true);
+        menuDeveloperOptions.setVisible(true);
         // TODO
     }    
 
@@ -112,9 +129,31 @@ public class FXMLDocumentController implements Initializable {
     private void handleBtnSelectUser(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UserSelection.fxml"));
         Scene scene = new Scene(root);
+        
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
+        window.setResizable(false);
         window.show();
+    }
+
+    @FXML
+    private void menuCompileAction1(ActionEvent event) {
+    }
+
+    @FXML
+    private void menuCompileAction2(ActionEvent event) {
+    }
+
+    @FXML
+    private void menuLinkAction1(ActionEvent event) {
+    }
+
+    @FXML
+    private void menuLinkAction2(ActionEvent event) {
+    }
+
+    @FXML
+    private void handleBtnSelectUser(MouseEvent event) {
     }
     
 }

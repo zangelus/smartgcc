@@ -1,40 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="406.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smartgcc.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smartgcc.FXMLDocumentController">
     <children>
       <SplitPane dividerPositions="0.5" layoutX="1.0" layoutY="14.0" orientation="VERTICAL" prefHeight="409.0" prefWidth="427.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#handleBtnSelectUser" prefHeight="191.0" prefWidth="409.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#handleBtnSelectUser" prefHeight="89.0" prefWidth="598.0">
                <children>
-                  <TextField fx:id="textfield1" layoutX="99.0" layoutY="49.0" prefHeight="25.0" prefWidth="278.0" />
-                  <Button layoutX="27.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleBtnBrowse" text="Browse" />
-                  <ListView fx:id="listview1" layoutX="99.0" layoutY="13.0" prefHeight="25.0" prefWidth="278.0" />
-                  <Label layoutX="19.0" layoutY="53.0" text="Output name" />
-                  <Button layoutX="322.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleBtnBuild" prefHeight="25.0" prefWidth="55.0" text="Build" />
-                    <Button fx:id="button" layoutX="247.0" layoutY="85.0" onAction="#handleBtnCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel" />
+                  <TextField fx:id="textfield1" layoutX="139.0" layoutY="94.0" prefHeight="25.0" prefWidth="278.0" />
+                  <Button layoutX="67.0" layoutY="58.0" mnemonicParsing="false" onAction="#handleBtnBrowse" text="Browse" />
+                  <ListView fx:id="listview1" layoutX="139.0" layoutY="58.0" prefHeight="25.0" prefWidth="278.0" />
+                  <Label layoutX="59.0" layoutY="98.0" text="Output name" />
+                  <Button layoutX="362.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleBtnBuild" prefHeight="25.0" prefWidth="55.0" text="Build" />
+                    <Button fx:id="button" layoutX="287.0" layoutY="130.0" onAction="#handleBtnCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel" />
                     <Label fx:id="label" layoutX="148.0" layoutY="89.0" minHeight="16" minWidth="69" />
-                  <Button layoutX="165.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleBtnSelectUser" text="Select user" />
+                  <Button layoutX="205.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleBtnSelectUser" text="Select user" />
+                  <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="598.0">
+                    <menus>
+                      <Menu mnemonicParsing="false" text="File">
+                        <items>
+                          <MenuItem mnemonicParsing="false" onAction="#handleBtnBrowse" text="Open         " />
+                              <MenuItem mnemonicParsing="false" text="Build        " />
+                        </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Options">
+                        <items>
+                              <Menu id="menuCompile" fx:id="menuCompile" mnemonicParsing="false" text="Compile">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" onAction="#menuCompileAction1" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" onAction="#menuCompileAction2" text="Action 2" />
+                                 </items>
+                              </Menu>
+                              <Menu id="menuLink" fx:id="menuLink" mnemonicParsing="false" text="Link">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" onAction="#menuLinkAction1" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" onAction="#menuLinkAction2" text="Action 2" />
+                                 </items>
+                              </Menu>
+                              <Menu id="menuDebug" fx:id="menuDebug" mnemonicParsing="false" text="Debug">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                              </Menu>
+                              <Menu id="menuCodeGeneration" fx:id="menuCodeGeneration" mnemonicParsing="false" text="Code Generation" visible="false">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                              </Menu>
+                              <Menu id="menuDeveloper" fx:id="menuDeveloperOptions" mnemonicParsing="false" text="Developer options" visible="false">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                              </Menu>
+                        </items>
+                      </Menu>
+                        <Menu mnemonicParsing="false" text="All Options">
+                           <items>
+                              <Menu mnemonicParsing="false" text="Compile">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" text="Link">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" text="Debug">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" text="Code Generation">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" text="Developer options">
+                                 <items>
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 1" />
+                                    <CheckMenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                              </Menu>
+                           </items>
+                        </Menu>
+                      <Menu mnemonicParsing="false" text="Help">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="About" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
                   <Label layoutX="15.0" layoutY="14.0" text="Output Window" />
-                  <TabPane prefHeight="200.0" prefWidth="425.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane prefHeight="200.0" prefWidth="598.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab text="Output window">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView fx:id="listview2" prefHeight="172.0" prefWidth="425.0" />
+                                    <ListView fx:id="listview2" prefHeight="172.0" prefWidth="598.0" />
                                  </children>
                               </AnchorPane>
                         </content>
