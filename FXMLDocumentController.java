@@ -21,6 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -55,6 +57,8 @@ public class FXMLDocumentController implements Initializable {
     private Menu menuCodeGeneration;
     @FXML
     private Menu menuDeveloperOptions;
+    @FXML
+    private MenuBar menuBar;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -128,11 +132,12 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleBtnSelectUser(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UserSelection.fxml"));
+        
         Scene scene = new Scene(root);
         
+        //Stage window = ShareObject.getInstance().stage;
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
-        window.setResizable(false);
         window.show();
     }
 
@@ -154,6 +159,18 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleBtnSelectUser(MouseEvent event) {
+        
     }
-    
+
+    @FXML
+    private void handleMenuUserOptions(ActionEvent event) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
+        Scene scene = new Scene(root);
+        
+        Stage window = (Stage) menuBar.getScene().getWindow();
+        
+        window.setScene(scene);
+        window.show();
+    }
 }
