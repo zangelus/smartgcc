@@ -28,4 +28,9 @@ public class SingletonApp {
     } 
     
     public Stage stage;
+    public boolean CheckBox100_1;
+    public boolean CheckBox100_2;
+    public boolean CheckBox300_1;
+    public String TextField100_2;
+
 }

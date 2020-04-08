@@ -8,6 +8,7 @@ package smartgcc;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -92,35 +93,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleBtnBuild(ActionEvent event) {
-        listview2.getItems().add("Start: Build a project using g++");
-
-        String absolutePath = MainFile.getAbsolutePath();
-        String parentDirectory = MainFile.getParent();
-        String executableName = parentDirectory + "\\";
-
-        if (textfield1.getText().equals("")) {
-            executableName += MainFile.getName().replaceFirst("[.][^.]+$", "");
-        } else {
-            executableName += textfield1.getText();
-        }
-   
-        String[] cmd = new String[4];
-        cmd[0] = "g++";
-        cmd[1] = absolutePath;
-        cmd[2] = "-o";
-        cmd[3] = executableName;
-        
-        GccCommand gccCmd = new GccCommand();
-        int retValue = gccCmd.ExecutedCommand1(cmd);
-
-        listview2.getItems().add("ExitValue: " + retValue);
-        listview2.getItems().add(gccCmd.GetOutput());
-        
-        if(retValue != 0){
-            listview2.getItems().add(gccCmd.GetError());
-        }
-        
-        System.out.println("ExitValue: " + retValue);
+        build();
     }
 
     @FXML
@@ -165,12 +138,78 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleMenuUserOptions(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
-        Scene scene = new Scene(root);
+        MenuItem mItem = (MenuItem) event.getSource();
+        String menuItemName = mItem.getText();
         
-        Stage window = (Stage) menuBar.getScene().getWindow();
+        if ("user options".equalsIgnoreCase(menuItemName)) {
+            
+            Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
+            Scene scene = new Scene(root);
+            Stage window = (Stage) menuBar.getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+            
+        } else if("build".equalsIgnoreCase(menuItemName)){
+            build();
+        }                
+    }
+    
+    private void build(){
         
-        window.setScene(scene);
-        window.show();
+        ArrayList<String> comm  = new ArrayList<>(); 
+        SingletonApp s = SingletonApp.getInstance();
+        
+        String absolutePath = MainFile.getAbsolutePath();
+        String parentDirectory = MainFile.getParent();
+        String executableName = parentDirectory + "\\";
+
+        if (textfield1.getText().equals("")) {
+            executableName += MainFile.getName().replaceFirst("[.][^.]+$", "");
+        } else {
+            executableName += textfield1.getText();
+        }
+        
+        comm.add("g++");
+        comm.add(absolutePath);
+        
+        if(s.CheckBox100_1){
+            comm.add("-c");
+        }
+        if(s.CheckBox100_2){
+            comm.add("-o");
+            comm.add(s.TextField100_2);
+        }
+        
+        String[] cmd1 = new String[comm.size()];
+        int i=0;
+        
+        for(Object o : comm.toArray())
+        {
+            cmd1[i++]= (String)o;
+        }
+        
+        listview2.getItems().add("Start: Build a project using g++");
+
+   
+//        String[] cmd = new String[4];
+//        cmd[0] = "g++";
+//        cmd[1] = absolutePath;
+//        cmd[2] = "-o";
+//        cmd[3] = executableName;
+//        
+//        GccCommand gccCmd = new GccCommand();
+//        int retValue = gccCmd.ExecutedCommand1(cmd);
+
+        GccCommand gccCmd = new GccCommand();
+        int retValue = gccCmd.ExecutedCommand1(cmd1);
+
+        listview2.getItems().add("ExitValue: " + retValue);
+        listview2.getItems().add(gccCmd.GetOutput());
+        
+        if(retValue != 0){
+            listview2.getItems().add(gccCmd.GetError());
+        }
+        
+        System.out.println("ExitValue: " + retValue);
     }
 }

@@ -32,10 +32,10 @@ public class GccCommand {
 
             Runtime rt = Runtime.getRuntime();
 
-            System.out.println(command[0]+ " " + 
-                               command[1]+ " " +
-                               command[2]+ " " +
-                               command[3]+ " " );
+//            System.out.println(command[0]+ " " + 
+//                               command[1]+ " " +
+//                               command[2]+ " " +
+//                               command[3]+ " " );
 
             Process proc = rt.exec(command);
             StreamProcessReader errorStream = new StreamProcessReader(proc.getErrorStream(), "ERROR");
