@@ -114,13 +114,6 @@ public class FXMLDocumentController implements Initializable {
         window.show();
     }
 
-    @FXML
-    private void menuCompileAction1(ActionEvent event) {
-    }
-
-    @FXML
-    private void menuCompileAction2(ActionEvent event) {
-    }
 
     @FXML
     private void menuLinkAction1(ActionEvent event) {

@@ -31,8 +31,8 @@
                     <menus>
                       <Menu mnemonicParsing="false" text="File">
                         <items>
-                          <MenuItem mnemonicParsing="false" onAction="#handleBtnBrowse" text="Open         " />
-                              <MenuItem mnemonicParsing="false" text="Build        " />
+                          <MenuItem mnemonicParsing="false" onAction="#handleBtnBrowse" text="Open" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleMenuUserOptions" text="Build" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Options">
