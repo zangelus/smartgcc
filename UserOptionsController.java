@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -27,35 +28,62 @@ import javafx.stage.Stage;
  */
 public class UserOptionsController implements Initializable {
 
-    boolean CheckBox100_1;
-    boolean CheckBox100_2;
-    boolean CheckBox300_1;
-    String TextField100_2;
+    boolean tCheckBox100_1;
+    boolean tCheckBox100_2;
+    boolean tCheckBox300_1;
+    String tTextField100_2;
+    @FXML
+    private CheckBox checkBox100_1;
+    @FXML
+    private TextField textField100_2;
+    @FXML
+    private CheckBox checkBox100_2;
+    @FXML
+    private CheckBox checkBox300_1;
+    @FXML
+    private ComboBox<?> comboBox300_1;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        SingletonApp s = SingletonApp.getInstance();
+       
+        tCheckBox100_1   = s.CheckBox100_1;
+        tCheckBox100_2   = s.CheckBox100_2;
+        tCheckBox300_1   = s.CheckBox300_1;
+        tTextField100_2  = s.TextField100_2;
+        
+        updateUI();
     }    
 
+    private void updateUI() {
+        checkBox100_1.setSelected(tCheckBox100_1);
+        checkBox100_2.setSelected(tCheckBox100_2);
+        checkBox300_1.setSelected(tCheckBox300_1);
+        
+        textField100_2.setText(tTextField100_2);
+    }
+    
+        
     @FXML
     private void handleCheckBox100_1(ActionEvent event) {
         CheckBox chkbItem = (CheckBox) event.getSource();
-        CheckBox100_1 = !chkbItem.isDisable();
+        tCheckBox100_1 = !chkbItem.isDisable();
     }
 
     @FXML
     private void handleTextField100_2(ActionEvent event) {
         TextField txtFieldItem = (TextField) event.getSource();
-        TextField100_2 = txtFieldItem.getText();
+        tTextField100_2 = txtFieldItem.getText();
     }
 
     @FXML
     private void handleCheckBox100_2(ActionEvent event) {
         CheckBox chkbItem = (CheckBox) event.getSource();
-        CheckBox100_2 = !chkbItem.isDisable();
+        tCheckBox100_2 = !chkbItem.isDisable();
     }
 
     @FXML
@@ -65,16 +93,21 @@ public class UserOptionsController implements Initializable {
     @FXML
     private void handleComboBox300_1(ActionEvent event) {
         CheckBox chkbItem = (CheckBox) event.getSource();
-        CheckBox300_1 = !chkbItem.isDisable();
+        tCheckBox300_1 = !chkbItem.isDisable();
     }
 
     @FXML
     private void handleBtnApply(ActionEvent event) {
+        
         SingletonApp s   = SingletonApp.getInstance();
-        s.CheckBox100_1  = CheckBox100_1;
-        s.CheckBox100_2  = CheckBox100_2;
-        s.CheckBox300_1  = CheckBox300_1;
-        s.TextField100_2 = TextField100_2;
+        
+        s.CheckBox100_1  = tCheckBox100_1;
+        s.CheckBox100_2  = tCheckBox100_2;
+        s.CheckBox300_1  = tCheckBox300_1;
+        s.TextField100_2 = tTextField100_2;
+        
+        s.SaveAllSettings();
+        
         goBack();
     }
 
@@ -99,5 +132,6 @@ public class UserOptionsController implements Initializable {
             
         }
     }
-    
+
+
 }

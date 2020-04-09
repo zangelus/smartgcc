@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -93,7 +94,13 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleBtnBuild(ActionEvent event) {
-        build();
+        Properties prop = new Properties();
+            // set the properties value
+        prop.setProperty("db.url", "localhost");
+        prop.setProperty("db.user", "mkyong");
+        prop.setProperty("db.password", "password");
+
+        //build();
     }
 
     @FXML
