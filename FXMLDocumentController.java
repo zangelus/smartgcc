@@ -172,12 +172,12 @@ public class FXMLDocumentController implements Initializable {
         comm.add("g++");
         comm.add(absolutePath);
         
-        if(s.CheckBox100_1){
+        if(s.prop.getProperty("checkBox100_1").equals(s.True)){
             comm.add("-c");
         }
-        if(s.CheckBox100_2){
+        if(s.prop.getProperty("checkBox100_2").equals(s.True)){
             comm.add("-o");
-            comm.add(s.TextField100_2);
+            comm.add(s.prop.getProperty("textField100_2"));
         }
         
         String[] cmd1 = new String[comm.size()];

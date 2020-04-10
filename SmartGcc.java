@@ -25,8 +25,6 @@ public class SmartGcc extends Application {
         
         SingletonApp s = SingletonApp.getInstance();
         s.stage = stage;
-        s.LoadSettings();
-        
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
