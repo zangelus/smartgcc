@@ -22,11 +22,20 @@ import javafx.stage.Stage;
  */
 public class SingletonApp {
     
+    //page 1 - compiling
     public final String OP_S_OUTPUT_FILE_NAME       = "OP_S_OUTPUT_FILE_NAME";
     public final String OP_B_OUTPUT_FILE_NAME       = "OP_B_OUTPUT_FILE_NAME";
     public final String OP_B_CREATE_OBJECT_FILE     = "OP_B_CREATE_OBJECT_FILE";
+    
+    //page 3 - debugging
     public final String OP_B_WARNING_PROFILE        = "OP_B_WARNING_PROFILE";
     public final String OP_S_WARNING_PROFILE        = "OP_S_WARNING_PROFILE";
+    
+    //page 5 - developper
+    public final String OP_B_ENABLE_VERBOSE         = "OP_B_ENABLE_VERBOSE";
+    
+    //aditional
+    public final String OP_S_LAST_PATH_OPENED       = "OP_S_LAST_PATH_OPENED";
     
     public String LAST_PATH_OPENED = ""; 
     public String LAST_GCC_COMMAND = ""; 
@@ -142,12 +151,25 @@ public class SingletonApp {
         File f  = new File(fileName);
         f.delete();
 
-        prop.setProperty(OP_S_OUTPUT_FILE_NAME          , "");
-        prop.setProperty(OP_B_OUTPUT_FILE_NAME          , "false");
+        //page 1
         prop.setProperty(OP_B_CREATE_OBJECT_FILE        , "false");
+        prop.setProperty(OP_B_OUTPUT_FILE_NAME          , "false");
+        prop.setProperty(OP_S_OUTPUT_FILE_NAME          , "");
+        
+        //page 3
         prop.setProperty(OP_B_WARNING_PROFILE           , "false");
         prop.setProperty(OP_S_WARNING_PROFILE           , "Default");
         
+        //page 5
+        prop.setProperty(OP_B_ENABLE_VERBOSE            , "false");
+        
         Save();
+    }
+    
+    public void sanityCheck(){
+        File f  = new File(fileName);
+        if(!f.exists()){
+            defaultSettings();
+        }
     }
 }

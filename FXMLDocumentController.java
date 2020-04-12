@@ -200,6 +200,10 @@ public class FXMLDocumentController implements Initializable {
         
         comm.add("g++");
         
+        if(s.getBoolValue(s.OP_B_ENABLE_VERBOSE)){
+            comm.add("-v");
+        }
+        
         if(s.getBoolValue(s.OP_B_CREATE_OBJECT_FILE) && 
            !"".equals(s.getTextValue(s.OP_S_OUTPUT_FILE_NAME)))
         {
@@ -208,14 +212,14 @@ public class FXMLDocumentController implements Initializable {
         if(s.getBoolValue(s.OP_B_OUTPUT_FILE_NAME) && 
            !"".equals(s.getTextValue(s.OP_S_OUTPUT_FILE_NAME)))
         {
-            comm.add("-o");
             outputName = s.getTextValue(s.OP_S_OUTPUT_FILE_NAME);
         }
         else{
             //use the same name as the main.c file.
             outputName = getNameOfMainFile();
-        }   
+        } 
         
+        comm.add("-o");
         pathToBin = pathToBin + outputName;
         comm.add(pathToBin);
         

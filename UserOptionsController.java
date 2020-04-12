@@ -30,10 +30,17 @@ import javafx.stage.Stage;
  */
 public class UserOptionsController implements Initializable {
 
+    //check box in the UI
     boolean tCheckBox100_1;
     boolean tCheckBox100_2;
     boolean tCheckBox300_1;
+    boolean tCheckBox500_1;
+    
+    //text Files in the UI
     String tTextField100_2;
+    
+    //ComboBox in the UI
+    
     @FXML
     private CheckBox checkBox100_1;
     @FXML
@@ -47,6 +54,8 @@ public class UserOptionsController implements Initializable {
     
     SingletonApp s = SingletonApp.getInstance();
     Properties change;
+    @FXML
+    private CheckBox checkBox500_1;
     /**
      * Initializes the controller class.
      * @param url
@@ -60,6 +69,7 @@ public class UserOptionsController implements Initializable {
        tCheckBox100_1   = s.getBoolValue(s.OP_B_CREATE_OBJECT_FILE);
        tCheckBox100_2   = s.getBoolValue(s.OP_B_OUTPUT_FILE_NAME);
        tCheckBox300_1   = s.getBoolValue(s.OP_B_WARNING_PROFILE);
+       tCheckBox500_1   = s.getBoolValue(s.OP_B_ENABLE_VERBOSE);
        tTextField100_2  = s.getTextValue(s.OP_S_OUTPUT_FILE_NAME);
 
        updateUI();
@@ -70,6 +80,7 @@ public class UserOptionsController implements Initializable {
         checkBox100_1.setSelected(tCheckBox100_1);
         checkBox100_2.setSelected(tCheckBox100_2);
         checkBox300_1.setSelected(tCheckBox300_1);
+        checkBox300_1.setSelected(tCheckBox500_1);
         textField100_2.setText(tTextField100_2);
     }
     
@@ -150,6 +161,17 @@ public class UserOptionsController implements Initializable {
         TextField txtFieldItem = (TextField) event.getSource();
         tTextField100_2 = txtFieldItem.getText();
         change.setProperty(s.OP_S_OUTPUT_FILE_NAME, tTextField100_2);
+    }
+
+    @FXML
+    private void handleCheckBoxAll(ActionEvent event) {
+        
+        CheckBox chkbItem = (CheckBox) event.getSource();
+        
+        if(chkbItem.idProperty().getValue().equals("checkBox500_1")){
+            tCheckBox500_1 = chkbItem.isSelected();
+            change.setProperty(s.OP_B_ENABLE_VERBOSE, tCheckBox500_1?"true":"false");
+        }
     }
 
 
