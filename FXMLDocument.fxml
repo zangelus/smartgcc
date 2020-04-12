@@ -26,6 +26,7 @@
                     <menus>
                       <Menu mnemonicParsing="false" text="File">
                         <items>
+                              <MenuItem mnemonicParsing="false" onAction="#handleMainManu" text="New Project" />
                               <MenuItem mnemonicParsing="false" onAction="#handleMainManu" text="Open Project" />
                               <MenuItem mnemonicParsing="false" onAction="#handleMainManu" text="Save Project As" />
                               <MenuItem mnemonicParsing="false" onAction="#handleMainManu" text="Build" />

@@ -38,12 +38,22 @@ public class SingletonApp {
     public final String OP_S_LAST_PATH_OPENED       = "OP_S_LAST_PATH_OPENED";
     
     
-    public String LAST_PATH_OPENED = ""; 
-    public String LAST_GCC_COMMAND = ""; 
-    public Boolean isProjectOpen = false;
+    //others
+    public String LAST_PATH_OPENED                  = ""; 
+    public String LAST_GCC_COMMAND                  = "";
+    public String CURRENT_OPEN_PROJECT              = "";
+    public Boolean isProjectOpen                    = false;
+    public final String NO_PROJECT_IS_OPEN          = "No project is open. Open a project first!";
+    
 
+    //Const
+    public String cb300_1_option1 = "Inhibit all warning messages";
+    public String cb300_1_option2 = "Make all warnings into errors";
+    public String cb300_1_option3 = "Enable language specific warnings";
+    public String cb300_1_option4 = "Enable extra warnings";
+    
     String path =  System.getProperty("user.dir");
-    String fileName = path + "\\options.properties";
+    String defaultProjctFile = path + "\\options.properties";
     public Properties prop = new Properties();
     String True = "true";
     String notDefined = "no_def";
@@ -147,9 +157,9 @@ public class SingletonApp {
             return false;
         }
     }
-    
+    /*
     public Boolean Load(){
-        try (InputStream input = new FileInputStream(fileName)) {
+        try (InputStream input = new FileInputStream(defaultProjctFile)) {
 
             prop.load(input);
             return true;
@@ -160,7 +170,7 @@ public class SingletonApp {
     }
     
     public Boolean Save(){
-        try (OutputStream output = new FileOutputStream(fileName)) {
+        try (OutputStream output = new FileOutputStream(defaultProjctFile)) {
 
             prop.store(output, null);
             return true;
@@ -170,10 +180,11 @@ public class SingletonApp {
             return false;
         }
     }
+    */
     
     public void defaultSettings(){
 
-        File f  = new File(fileName);
+        File f  = new File(defaultProjctFile);
         f.delete();
 
         //page 1
@@ -183,7 +194,7 @@ public class SingletonApp {
         
         //page 3
         prop.setProperty(OP_B_WARNING_PROFILE           , "false");
-        prop.setProperty(OP_S_WARNING_PROFILE           , "Default");
+        prop.setProperty(OP_S_WARNING_PROFILE           , "");
         
         //page 5
         prop.setProperty(OP_B_ENABLE_VERBOSE            , "false");
@@ -191,17 +202,16 @@ public class SingletonApp {
         //Additional
         prop.setProperty(OP_S_LAST_PATH_OPENED          , "");
         
-        Save();
+        Save(defaultProjctFile);
     }
     
     public Boolean profileExist(){
         
-        File f  = new File(fileName);
+        File f  = new File(defaultProjctFile);
         if(!f.exists()){
             defaultSettings();
             return false;
         }
-        
         return true;
     }
 }

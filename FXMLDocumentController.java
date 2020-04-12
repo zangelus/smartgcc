@@ -52,29 +52,16 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label label1;
 
-        
-//    private Menu menuCompile;
-//    private Menu menuLink;
-//    private Menu menuDebug;
-//    private Menu menuCodeGeneration;
-//    private Menu menuDeveloperOptions;
-//   
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         if(s.isProjectOpen){
-            s.Load();
-            textfield2.setText(s.LAST_PATH_OPENED);
-            s.LAST_GCC_COMMAND = getStringGccCommand(getGccCommand());
-            textfield1.setText(s.LAST_GCC_COMMAND);
+            //load current project in properties
+            s.Load(s.CURRENT_OPEN_PROJECT);
+            
+            //updateUI
+            UpdateUI(s.CURRENT_OPEN_PROJECT);
         }
-
-//        menuCompile.setVisible(true);
-//        menuLink.setVisible(true);
-//        menuDebug.setVisible(true);
-//        menuCodeGeneration.setVisible(true);
-//        menuDeveloperOptions.setVisible(true);
     }    
 
 
@@ -88,28 +75,6 @@ public class FXMLDocumentController implements Initializable {
         build();
     }
 
-/*
-    private void handleMenuUserOptions(ActionEvent event) throws IOException {
-
-        MenuItem mItem = (MenuItem) event.getSource();
-        String menuItemName = mItem.getText();
-        
-        if ("user options".equalsIgnoreCase(menuItemName)) {
-            
-            Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
-            Scene scene = new Scene(root);
-            Stage window = (Stage) menuBar.getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-            
-        } else if("build".equalsIgnoreCase(menuItemName)){
-            build();
-        } 
-        else if("Set Default Options".equalsIgnoreCase(menuItemName)){
-            s.defaultSettings();
-        }  
-    }
- */ 
     private void build(){
         
         String[] cmd1 = getGccCommand();
@@ -158,7 +123,7 @@ public class FXMLDocumentController implements Initializable {
             System.out.println("file not valid");
         } 
     }
-        
+     
     private String getSourceDirectory(boolean bin) {
         
         
@@ -202,6 +167,22 @@ public class FXMLDocumentController implements Initializable {
         
         if(s.getBoolValue(s.OP_B_ENABLE_VERBOSE)){
             comm.add("-v");
+        }
+        
+        if(s.getBoolValue(s.OP_B_WARNING_PROFILE)){
+            
+            if (s.cb300_1_option1.equals(s.getTextValue(s.OP_S_WARNING_PROFILE))) {
+                comm.add("-w");
+            }
+            else if (s.cb300_1_option2.equals(s.getTextValue(s.OP_S_WARNING_PROFILE))) {
+                comm.add("-Werror");
+            }
+            else if (s.cb300_1_option3.equals(s.getTextValue(s.OP_S_WARNING_PROFILE))) {
+                comm.add("-Wall");
+            }
+            else if (s.cb300_1_option4.equals(s.getTextValue(s.OP_S_WARNING_PROFILE))) {
+                comm.add("-Wextra");
+            } 
         }
         
         if(s.getBoolValue(s.OP_B_CREATE_OBJECT_FILE) && 
@@ -260,6 +241,10 @@ public class FXMLDocumentController implements Initializable {
         
         if ("User Options".equalsIgnoreCase(menuItemName)) {
             try{
+                if(s.LAST_PATH_OPENED.equals("")){
+                    generateAlert(s.NO_PROJECT_IS_OPEN);
+                    return;
+                }
                 Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
                 Scene scene = new Scene(root);
                 //Stage window = (Stage) menuBar.getScene().getWindow();
@@ -276,9 +261,14 @@ public class FXMLDocumentController implements Initializable {
         } 
         else if("Set Default Options".equalsIgnoreCase(menuItemName)){
             s.defaultSettings();
-        } 
+        }
+        else if("New Project".equalsIgnoreCase(menuItemName)){
+            CreteNewProject();
+        }
         else if("Open Project".equalsIgnoreCase(menuItemName)){
-            LoadProject();
+            
+            File projectFile = Browse(FileType.PROPERTY);
+            LoadNewProject(projectFile);
         }    
         else if("Save Project As".equalsIgnoreCase(menuItemName)){
             SaveProject();
@@ -301,6 +291,87 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    private void CreteNewProject() {
+        
+        //get the path to the main.cpp
+        File f1 = Browse(FileType.CPP);
+        
+        if (f1 != null) {
+            s.LAST_PATH_OPENED = f1.getAbsolutePath();
+
+            //load defaults settings into properties
+            s.Load(s.defaultProjctFile);
+
+            //set desired settings in the new project
+            s.setTextValue(s.OP_S_LAST_PATH_OPENED, s.LAST_PATH_OPENED);
+
+            //start dialog to save the project in a property file
+            File projectFile = SaveProject();
+            LoadNewProject(projectFile);
+        }
+    }
+
+    private Boolean LoadNewProject(File projectFile) {
+
+        if (projectFile != null) {
+            //Keep project file in memory
+            s.CURRENT_OPEN_PROJECT = projectFile.getAbsolutePath();
+
+            //Load the project in the UI
+            if (UpdateUI(s.CURRENT_OPEN_PROJECT)) {
+                s.isProjectOpen = true;
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    private enum FileType{
+        CPP,
+        PROPERTY
+    }
+    
+    private File Browse(FileType type){
+
+        FileChooser fc = new FileChooser();
+        
+        if(type==FileType.CPP){
+            fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("C++ File", "*.cpp"),
+                new FileChooser.ExtensionFilter("C File", "*.c") 
+            );
+        }
+        else if(type==FileType.PROPERTY){
+            fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Settings File", "*.properties")
+            );
+        }
+        
+        return fc.showOpenDialog(null);
+    }
+    
+    private Boolean UpdateUI(String projectFile){
+ 
+        if(projectFile != null){
+            
+            s.Load(projectFile);
+            
+            s.LAST_PATH_OPENED = s.prop.getProperty(s.OP_S_LAST_PATH_OPENED);
+            
+            textfield2.setText(s.LAST_PATH_OPENED);
+            textfield1.setText(getStringGccCommand(getGccCommand()));
+            label1.setText(projectFile);
+            
+            s.LAST_GCC_COMMAND = getStringGccCommand(getGccCommand());
+            textfield1.setText(s.LAST_GCC_COMMAND);
+            
+            return true;
+        }
+        else{
+            return false;
+        } 
+    }
+    /*
     private void LoadProject() {
         
         FileChooser fc = new FileChooser();
@@ -316,7 +387,9 @@ public class FXMLDocumentController implements Initializable {
             textfield2.setText(s.LAST_PATH_OPENED);
             textfield1.setText(getStringGccCommand(getGccCommand()));
             label1.setText(sf.getName());
+            
             s.isProjectOpen = true;
+            s.CURRENT_OPEN_PROJECT = sf.getAbsolutePath();
         }
         else{
             System.out.println("file not valid");
@@ -326,17 +399,14 @@ public class FXMLDocumentController implements Initializable {
         s.LAST_GCC_COMMAND = getStringGccCommand(getGccCommand());
         textfield1.setText(s.LAST_GCC_COMMAND);
     }
-
-    private void SaveProject() {
+*/
+    private File SaveProject() {
+        
+        File f = null;
         
         if(s.LAST_PATH_OPENED.equals("")){
-            
-            Alert alert = new Alert(AlertType.WARNING, "No project opens", ButtonType.OK);
-            alert.showAndWait();
-
-            if (alert.getResult() == ButtonType.YES) {
-
-            }
+            generateAlert(s.NO_PROJECT_IS_OPEN);
+            return f;
         }
         s.prop.setProperty(s.OP_S_LAST_PATH_OPENED, s.LAST_PATH_OPENED);
         
@@ -347,12 +417,24 @@ public class FXMLDocumentController implements Initializable {
         fileChooser.getExtensionFilters().add(extFilter);
 
         //Show save file dialog
-        File file = fileChooser.showSaveDialog(null);
+        f = fileChooser.showSaveDialog(null);
         
-        if (file != null) {
-            s.Save(file.getAbsolutePath());
+        if (f != null) {
+            s.Save(f.getAbsolutePath());
+            return f;
         }
+        
+        return f;
     }
+    
+    private Alert generateAlert(String msg){
+       Alert alert = new Alert(AlertType.WARNING, msg, ButtonType.OK);
+       alert.showAndWait(); 
+       return alert;
+    }
+
+
+    
 
 
 }

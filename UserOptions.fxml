@@ -36,8 +36,8 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: black;">
                      <children>
-                        <CheckBox fx:id="checkBox300_1" layoutX="28.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleCheckBox300_1" prefHeight="17.0" prefWidth="165.0" text="Warning profile" />
-                        <ComboBox fx:id="comboBox300_1" layoutX="258.0" layoutY="21.0" onAction="#handleComboBox300_1" prefHeight="25.0" prefWidth="296.0" />
+                        <CheckBox fx:id="checkBox300_1" layoutX="28.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" prefHeight="17.0" prefWidth="165.0" text="Warning profile" />
+                        <ComboBox fx:id="comboBox300_1" layoutX="258.0" layoutY="21.0" onAction="#handleComboBoxAll" prefHeight="25.0" prefWidth="296.0" />
                      </children>
                   </AnchorPane>
                </content>

@@ -21,7 +21,6 @@ public class SmartGcc extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        
         SingletonApp s = SingletonApp.getInstance();
         s.stage = stage;
         Parent root;
