@@ -18,7 +18,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -45,6 +49,8 @@ public class FXMLDocumentController implements Initializable {
     
     SingletonApp s = SingletonApp.getInstance();
     private String mainFilePath;
+    @FXML
+    private Label label1;
 
         
 //    private Menu menuCompile;
@@ -57,17 +63,73 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        s.Load();
-        textfield2.setText(s.LAST_PATH_OPENED);
-        s.LAST_GCC_COMMAND = getStringGccCommand(getGccCommand());
-        textfield1.setText(s.LAST_GCC_COMMAND);
-        
+        if(s.isProjectOpen){
+            s.Load();
+            textfield2.setText(s.LAST_PATH_OPENED);
+            s.LAST_GCC_COMMAND = getStringGccCommand(getGccCommand());
+            textfield1.setText(s.LAST_GCC_COMMAND);
+        }
+
 //        menuCompile.setVisible(true);
 //        menuLink.setVisible(true);
 //        menuDebug.setVisible(true);
 //        menuCodeGeneration.setVisible(true);
 //        menuDeveloperOptions.setVisible(true);
     }    
+
+
+    @FXML
+    private void handleBtnBrowse(ActionEvent event) {
+        browse();
+    }
+    
+    @FXML
+    private void handleBtnBuild(ActionEvent event) {
+        build();
+    }
+
+/*
+    private void handleMenuUserOptions(ActionEvent event) throws IOException {
+
+        MenuItem mItem = (MenuItem) event.getSource();
+        String menuItemName = mItem.getText();
+        
+        if ("user options".equalsIgnoreCase(menuItemName)) {
+            
+            Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
+            Scene scene = new Scene(root);
+            Stage window = (Stage) menuBar.getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+            
+        } else if("build".equalsIgnoreCase(menuItemName)){
+            build();
+        } 
+        else if("Set Default Options".equalsIgnoreCase(menuItemName)){
+            s.defaultSettings();
+        }  
+    }
+ */ 
+    private void build(){
+        
+        String[] cmd1 = getGccCommand();
+        s.LAST_GCC_COMMAND = getStringGccCommand(cmd1);
+        textfield1.setText(s.LAST_GCC_COMMAND);
+
+        listview2.getItems().add("Start: Build a project using g++");
+
+        GccCommand gccCmd = new GccCommand();
+        int retValue = gccCmd.ExecutedCommand1(cmd1);
+
+        listview2.getItems().add("ExitValue: " + retValue);
+        listview2.getItems().add(gccCmd.GetOutput());
+        
+        if(retValue != 0){
+            listview2.getItems().add(gccCmd.GetError());
+        }
+        
+        System.out.println("ExitValue: " + retValue);
+    }
 
     private void browse(){
         textfield2.clear();
@@ -90,75 +152,13 @@ public class FXMLDocumentController implements Initializable {
             s.LAST_PATH_OPENED = sf.getAbsolutePath();
             textfield2.setText(s.LAST_PATH_OPENED);
             textfield1.setText(getStringGccCommand(getGccCommand()));
+            s.isProjectOpen = true;
         }
         else{
             System.out.println("file not valid");
         } 
     }
-    
-    @FXML
-    private void handleBtnBuild(ActionEvent event) {
-        build();
-    }
-
-    @FXML
-    private void handleBtnCancel(ActionEvent event) {
-        listview2.getItems().add("Closing the app");
-        Platform.exit();
-    }
-
-    private void handleMenuUserOptions(ActionEvent event) throws IOException {
-
-        MenuItem mItem = (MenuItem) event.getSource();
-        String menuItemName = mItem.getText();
         
-        if ("user options".equalsIgnoreCase(menuItemName)) {
-            
-            Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
-            Scene scene = new Scene(root);
-            Stage window = (Stage) menuBar.getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-            
-        } else if("build".equalsIgnoreCase(menuItemName)){
-            build();
-        } 
-        else if("Set Default Options".equalsIgnoreCase(menuItemName)){
-            s.defaultSettings();
-        }  
-    }
-    
-    private void build(){
-        
-        String[] cmd1 = getGccCommand();
-        s.LAST_GCC_COMMAND = getStringGccCommand(cmd1);
-        textfield1.setText(s.LAST_GCC_COMMAND);
-
-        listview2.getItems().add("Start: Build a project using g++");
-
-   
-//        String[] cmd = new String[4];
-//        cmd[0] = "g++";
-//        cmd[1] = absolutePath;
-//        cmd[2] = "-o";
-//        cmd[3] = executableName;
-//        
-//        GccCommand gccCmd = new GccCommand();
-//        int retValue = gccCmd.ExecutedCommand1(cmd);
-
-        GccCommand gccCmd = new GccCommand();
-        int retValue = gccCmd.ExecutedCommand1(cmd1);
-
-        listview2.getItems().add("ExitValue: " + retValue);
-        listview2.getItems().add(gccCmd.GetOutput());
-        
-        if(retValue != 0){
-            listview2.getItems().add(gccCmd.GetError());
-        }
-        
-        System.out.println("ExitValue: " + retValue);
-    }
-
     private String getSourceDirectory(boolean bin) {
         
         
@@ -274,13 +274,20 @@ public class FXMLDocumentController implements Initializable {
         else if("Build".equalsIgnoreCase(menuItemName)){
             build();
         } 
-        else if("Open Project".equalsIgnoreCase(menuItemName)){
-            browse();
-        }
         else if("Set Default Options".equalsIgnoreCase(menuItemName)){
             s.defaultSettings();
         } 
-        else if("Select User type".equalsIgnoreCase(menuItemName)){
+        else if("Open Project".equalsIgnoreCase(menuItemName)){
+            LoadProject();
+        }    
+        else if("Save Project As".equalsIgnoreCase(menuItemName)){
+            SaveProject();
+        } 
+        else if("Close".equalsIgnoreCase(menuItemName)){
+            listview2.getItems().add("Closing the app");
+            Platform.exit();
+        } 
+        else if("Change User Profile".equalsIgnoreCase(menuItemName)){
             try{
                 Parent root = FXMLLoader.load(getClass().getResource("UserSelection.fxml"));
                 Scene scene = new Scene(root);
@@ -293,4 +300,59 @@ public class FXMLDocumentController implements Initializable {
             }
         }
     }
+
+    private void LoadProject() {
+        
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Settings File", "*.properties")
+        );
+        
+        File sf = fc.showOpenDialog(null);
+        if(sf != null){
+            
+            s.Load(sf.getAbsolutePath());
+            s.LAST_PATH_OPENED = s.prop.getProperty(s.OP_S_LAST_PATH_OPENED);
+            textfield2.setText(s.LAST_PATH_OPENED);
+            textfield1.setText(getStringGccCommand(getGccCommand()));
+            label1.setText(sf.getName());
+            s.isProjectOpen = true;
+        }
+        else{
+            System.out.println("file not valid");
+        } 
+        
+        textfield2.setText(s.LAST_PATH_OPENED);
+        s.LAST_GCC_COMMAND = getStringGccCommand(getGccCommand());
+        textfield1.setText(s.LAST_GCC_COMMAND);
+    }
+
+    private void SaveProject() {
+        
+        if(s.LAST_PATH_OPENED.equals("")){
+            
+            Alert alert = new Alert(AlertType.WARNING, "No project opens", ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+
+            }
+        }
+        s.prop.setProperty(s.OP_S_LAST_PATH_OPENED, s.LAST_PATH_OPENED);
+        
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter for text files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Property files (*.properties)", "*.properties");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(null);
+        
+        if (file != null) {
+            s.Save(file.getAbsolutePath());
+        }
+    }
+
+
 }

@@ -20,13 +20,19 @@ public class SmartGcc extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("UserSelection.fxml"));
+
         
         SingletonApp s = SingletonApp.getInstance();
         s.stage = stage;
-        s.sanityCheck();
-                
+        Parent root;
+        
+        if(s.profileExist()){
+             root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        }
+        else{
+            root = FXMLLoader.load(getClass().getResource("UserSelection.fxml"));
+        }      
+        
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);

@@ -32,11 +32,6 @@ public class GccCommand {
 
             Runtime rt = Runtime.getRuntime();
 
-//            System.out.println(command[0]+ " " + 
-//                               command[1]+ " " +
-//                               command[2]+ " " +
-//                               command[3]+ " " );
-
             Process proc = rt.exec(command);
             StreamProcessReader errorStream = new StreamProcessReader(proc.getErrorStream(), "ERROR");
             StreamProcessReader outputStream = new StreamProcessReader(proc.getInputStream(), "OUTPUT");
@@ -56,9 +51,9 @@ public class GccCommand {
             error = errorStream.getValue();
             output = outputStream.getValue();
             
-            //System.out.println("Exit: " + processExitCode);
-            //System.out.println("Error: " + s1);
-            //System.out.println("Output: " + s2);
+            System.out.println("Exit: " + processExitCode);
+            System.out.println("Error: " + error);
+            System.out.println("Output: " + output);
 
         } 
         catch (IOException | InterruptedException t) {

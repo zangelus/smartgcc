@@ -37,8 +37,10 @@ public class SingletonApp {
     //aditional
     public final String OP_S_LAST_PATH_OPENED       = "OP_S_LAST_PATH_OPENED";
     
+    
     public String LAST_PATH_OPENED = ""; 
     public String LAST_GCC_COMMAND = ""; 
+    public Boolean isProjectOpen = false;
 
     String path =  System.getProperty("user.dir");
     String fileName = path + "\\options.properties";
@@ -123,6 +125,29 @@ public class SingletonApp {
         }
     }
     
+    public Boolean Load(String fileName){
+        try (InputStream input = new FileInputStream(fileName)) {
+
+            prop.load(input);
+            return true;
+
+        } catch (IOException ex) {
+            return false;
+        }
+    }
+    
+    public Boolean Save(String fileName){
+        try (OutputStream output = new FileOutputStream(fileName)) {
+
+            prop.store(output, null);
+            return true;
+        } 
+        catch (IOException io) {
+            
+            return false;
+        }
+    }
+    
     public Boolean Load(){
         try (InputStream input = new FileInputStream(fileName)) {
 
@@ -163,13 +188,20 @@ public class SingletonApp {
         //page 5
         prop.setProperty(OP_B_ENABLE_VERBOSE            , "false");
         
+        //Additional
+        prop.setProperty(OP_S_LAST_PATH_OPENED          , "");
+        
         Save();
     }
     
-    public void sanityCheck(){
+    public Boolean profileExist(){
+        
         File f  = new File(fileName);
         if(!f.exists()){
             defaultSettings();
+            return false;
         }
+        
+        return true;
     }
 }
