@@ -19,6 +19,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -43,6 +45,7 @@ public class UserOptionsController implements Initializable {
     @FXML
     private ComboBox<?> comboBox300_1;
     
+    SingletonApp s = SingletonApp.getInstance();
     Properties change;
     /**
      * Initializes the controller class.
@@ -50,15 +53,14 @@ public class UserOptionsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-       change = new Properties();
-       SingletonApp s = SingletonApp.getInstance();
-       s.Load();
        
-       tCheckBox100_1   = s.prop.getProperty("checkBox100_1").equals(s.True);
-       tCheckBox100_2   = s.prop.getProperty("checkBox100_2").equals(s.True);
-       tCheckBox300_1   = s.prop.getProperty("checkBox300_1").equals(s.True);
-       tTextField100_2  = s.prop.getProperty("textField100_2");
+       s.Load();
+       change = new Properties();
+
+       tCheckBox100_1   = s.getBoolValue(s.OP_B_CREATE_OBJECT_FILE);
+       tCheckBox100_2   = s.getBoolValue(s.OP_B_OUTPUT_FILE_NAME);
+       tCheckBox300_1   = s.getBoolValue(s.OP_B_WARNING_PROFILE);
+       tTextField100_2  = s.getTextValue(s.OP_S_OUTPUT_FILE_NAME);
 
        updateUI();
     }    
@@ -76,28 +78,27 @@ public class UserOptionsController implements Initializable {
     private void handleCheckBox100_1(ActionEvent event) {
         CheckBox chkbItem = (CheckBox) event.getSource();
         tCheckBox100_1 = chkbItem.isSelected();
-        change.setProperty("checkBox100_1", tCheckBox100_1?"true":"false");
+        change.setProperty(s.OP_B_CREATE_OBJECT_FILE, tCheckBox100_1?"true":"false");
     }
 
     @FXML
     private void handleCheckBox100_2(ActionEvent event) {
         CheckBox chkbItem = (CheckBox) event.getSource();
         tCheckBox100_2 = chkbItem.isSelected();
-        change.setProperty("checkBox100_2", tCheckBox100_2?"true":"false");
+        change.setProperty(s.OP_B_OUTPUT_FILE_NAME, tCheckBox100_2?"true":"false");
     }
     
     @FXML
     private void handleCheckBox300_1(ActionEvent event) {
         CheckBox chkbItem = (CheckBox) event.getSource();
         tCheckBox300_1 = chkbItem.isSelected();
-        change.setProperty("checkBox300_1", tCheckBox300_1?"true":"false");
+        change.setProperty(s.OP_B_WARNING_PROFILE, tCheckBox300_1?"true":"false");
     }
     
-    @FXML
     private void handleTextField100_2(ActionEvent event) {
         TextField txtFieldItem = (TextField) event.getSource();
         tTextField100_2 = txtFieldItem.getText();
-        change.setProperty("textField100_2", tTextField100_2);
+        change.setProperty(s.OP_S_OUTPUT_FILE_NAME, tTextField100_2);
     }
 
 
@@ -142,6 +143,13 @@ public class UserOptionsController implements Initializable {
         catch(IOException e){
             
         }
+    }
+
+    @FXML
+    private void handleTextFieldChanged100_2(KeyEvent event) {
+        TextField txtFieldItem = (TextField) event.getSource();
+        tTextField100_2 = txtFieldItem.getText();
+        change.setProperty(s.OP_S_OUTPUT_FILE_NAME, tTextField100_2);
     }
 
 

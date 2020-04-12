@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -20,12 +19,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -38,69 +35,70 @@ import javafx.stage.Stage;
 public class FXMLDocumentController implements Initializable {
     
     @FXML
-    private Label label;
-    @FXML
-    private Button button;
-    @FXML
-    private ListView<String> listview1;
-    @FXML
     private TextField textfield1;
-    
-    private File MainFile;
+    @FXML
+    private TextField textfield2;
     @FXML
     private ListView<String> listview2;
     @FXML
-    private Menu menuCompile;
-    @FXML
-    private Menu menuLink;
-    @FXML
-    private Menu menuDebug;
-    @FXML
-    private Menu menuCodeGeneration;
-    @FXML
-    private Menu menuDeveloperOptions;
-    @FXML
     private MenuBar menuBar;
+    
+    SingletonApp s = SingletonApp.getInstance();
+    private String mainFilePath;
+
+        
+//    private Menu menuCompile;
+//    private Menu menuLink;
+//    private Menu menuDebug;
+//    private Menu menuCodeGeneration;
+//    private Menu menuDeveloperOptions;
+//   
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        menuCompile.setVisible(true);
-        menuLink.setVisible(true);
-        menuDebug.setVisible(true);
-        menuCodeGeneration.setVisible(true);
-        menuDeveloperOptions.setVisible(true);
-        // TODO
+        s.Load();
+        textfield2.setText(s.LAST_PATH_OPENED);
+        s.LAST_GCC_COMMAND = getStringGccCommand(getGccCommand());
+        textfield1.setText(s.LAST_GCC_COMMAND);
+        
+//        menuCompile.setVisible(true);
+//        menuLink.setVisible(true);
+//        menuDebug.setVisible(true);
+//        menuCodeGeneration.setVisible(true);
+//        menuDeveloperOptions.setVisible(true);
     }    
 
-    @FXML
-    private void handleBtnBrowse(ActionEvent event) {
-        
-        listview1.getItems().clear();
+    private void browse(){
+        textfield2.clear();
         
         FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("C File", "*.c"),new FileChooser.ExtensionFilter("C++ File", "*.cpp"));
+        if(!s.LAST_PATH_OPENED.equals(""))
+        {
+            File f = new File(s.LAST_PATH_OPENED);
+            if(f.exists()){
+               fc.setInitialDirectory(new File(f.getParent())); 
+            }
+        }
+        fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("C++ File", "*.cpp"),
+                new FileChooser.ExtensionFilter("C File", "*.c") 
+        );
         
         File sf = fc.showOpenDialog(null);
         if(sf != null){
-            MainFile = sf;
-            listview1.getItems().add(sf.getName());
-            listview1.getItems().add(sf.getAbsolutePath());
+            s.LAST_PATH_OPENED = sf.getAbsolutePath();
+            textfield2.setText(s.LAST_PATH_OPENED);
+            textfield1.setText(getStringGccCommand(getGccCommand()));
         }
         else{
             System.out.println("file not valid");
-        }
+        } 
     }
-
+    
     @FXML
     private void handleBtnBuild(ActionEvent event) {
-        Properties prop = new Properties();
-            // set the properties value
-        prop.setProperty("db.url", "localhost");
-        prop.setProperty("db.user", "mkyong");
-        prop.setProperty("db.password", "password");
-
-        //build();
+        build();
     }
 
     @FXML
@@ -109,33 +107,6 @@ public class FXMLDocumentController implements Initializable {
         Platform.exit();
     }
 
-    @FXML
-    private void handleBtnSelectUser(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("UserSelection.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        //Stage window = ShareObject.getInstance().stage;
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-    }
-
-
-    @FXML
-    private void menuLinkAction1(ActionEvent event) {
-    }
-
-    @FXML
-    private void menuLinkAction2(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleBtnSelectUser(MouseEvent event) {
-        
-    }
-
-    @FXML
     private void handleMenuUserOptions(ActionEvent event) throws IOException {
 
         MenuItem mItem = (MenuItem) event.getSource();
@@ -151,43 +122,18 @@ public class FXMLDocumentController implements Initializable {
             
         } else if("build".equalsIgnoreCase(menuItemName)){
             build();
-        }                
+        } 
+        else if("Set Default Options".equalsIgnoreCase(menuItemName)){
+            s.defaultSettings();
+        }  
     }
     
     private void build(){
         
-        ArrayList<String> comm  = new ArrayList<>(); 
-        SingletonApp s = SingletonApp.getInstance();
-        
-        String absolutePath = MainFile.getAbsolutePath();
-        String parentDirectory = MainFile.getParent();
-        String executableName = parentDirectory + "\\";
+        String[] cmd1 = getGccCommand();
+        s.LAST_GCC_COMMAND = getStringGccCommand(cmd1);
+        textfield1.setText(s.LAST_GCC_COMMAND);
 
-        if (textfield1.getText().equals("")) {
-            executableName += MainFile.getName().replaceFirst("[.][^.]+$", "");
-        } else {
-            executableName += textfield1.getText();
-        }
-        
-        comm.add("g++");
-        comm.add(absolutePath);
-        
-        if(s.prop.getProperty("checkBox100_1").equals(s.True)){
-            comm.add("-c");
-        }
-        if(s.prop.getProperty("checkBox100_2").equals(s.True)){
-            comm.add("-o");
-            comm.add(s.prop.getProperty("textField100_2"));
-        }
-        
-        String[] cmd1 = new String[comm.size()];
-        int i=0;
-        
-        for(Object o : comm.toArray())
-        {
-            cmd1[i++]= (String)o;
-        }
-        
         listview2.getItems().add("Start: Build a project using g++");
 
    
@@ -211,5 +157,136 @@ public class FXMLDocumentController implements Initializable {
         }
         
         System.out.println("ExitValue: " + retValue);
+    }
+
+    private String getSourceDirectory(boolean bin) {
+        
+        
+        if(!s.LAST_PATH_OPENED.equals("")){
+            
+            File mainFile = new File(s.LAST_PATH_OPENED);
+            
+            String absolutePath = mainFile.getAbsolutePath();
+            String parentDirectory = mainFile.getParent() + (bin?"\\bin":"\\debug");
+
+            File directory = new File(parentDirectory);
+            if (! directory.exists()){
+                directory.mkdir();
+            }
+            return parentDirectory + "\\";
+        }
+        return null;
+        
+    }
+    
+    private String getNameOfMainFile() {
+
+        if(!s.LAST_PATH_OPENED.equals("")){
+            
+            File mainFile = new File(s.LAST_PATH_OPENED);
+            return mainFile.getName().replaceFirst("[.][^.]+$", "");
+        }
+        return null;
+        
+    }
+
+    private String[] getGccCommand() {
+        
+        ArrayList<String> comm  = new ArrayList<>(); 
+        String pathToBin = getSourceDirectory(true);
+        if(pathToBin==null) return null;
+        
+        String outputName;
+        
+        comm.add("g++");
+        
+        if(s.getBoolValue(s.OP_B_CREATE_OBJECT_FILE) && 
+           !"".equals(s.getTextValue(s.OP_S_OUTPUT_FILE_NAME)))
+        {
+            comm.add("-c");
+        }
+        if(s.getBoolValue(s.OP_B_OUTPUT_FILE_NAME) && 
+           !"".equals(s.getTextValue(s.OP_S_OUTPUT_FILE_NAME)))
+        {
+            comm.add("-o");
+            outputName = s.getTextValue(s.OP_S_OUTPUT_FILE_NAME);
+        }
+        else{
+            //use the same name as the main.c file.
+            outputName = getNameOfMainFile();
+        }   
+        
+        pathToBin = pathToBin + outputName;
+        comm.add(pathToBin);
+        
+        comm.add(s.LAST_PATH_OPENED);
+
+        String[] cmd1 = new String[comm.size()];
+        int i=0;
+        
+        for(Object o : comm.toArray())
+        {
+            cmd1[i++]= (String)o;
+        }
+        
+        return cmd1;
+    }
+    
+    public String getStringGccCommand(String[] cmds){
+        
+        String txtCommand="";
+        String WS = " ";
+        
+        if(cmds==null) return "";
+        
+        for(String s1 : cmds){
+            txtCommand += s1 + WS;
+        }
+        System.out.print("gcc command: " + txtCommand);  
+        
+        return txtCommand;
+    }
+
+    @FXML
+    private void handleMainManu(ActionEvent event) {
+        
+        MenuItem mItem = (MenuItem) event.getSource();
+        
+        String menuItemName = mItem.getText();
+        
+        if ("User Options".equalsIgnoreCase(menuItemName)) {
+            try{
+                Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
+                Scene scene = new Scene(root);
+                //Stage window = (Stage) menuBar.getScene().getWindow();
+                Stage window = s.stage;
+                window.setScene(scene);
+                window.show();
+            }
+            catch (Exception e){
+                System.out.println("Error opening FXML window");
+            }
+        }
+        else if("Build".equalsIgnoreCase(menuItemName)){
+            build();
+        } 
+        else if("Open Project".equalsIgnoreCase(menuItemName)){
+            browse();
+        }
+        else if("Set Default Options".equalsIgnoreCase(menuItemName)){
+            s.defaultSettings();
+        } 
+        else if("Select User type".equalsIgnoreCase(menuItemName)){
+            try{
+                Parent root = FXMLLoader.load(getClass().getResource("UserSelection.fxml"));
+                Scene scene = new Scene(root);
+                Stage window = s.stage;
+                window.setScene(scene);
+                window.show();
+            }
+            catch (Exception e){
+                System.out.println("Error opening FXML window");
+            }
+        }
     }
 }
