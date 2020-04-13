@@ -29,6 +29,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -51,16 +52,23 @@ public class FXMLDocumentController implements Initializable {
     private String mainFilePath;
     @FXML
     private Label label1;
+    @FXML
+    private AnchorPane anchor1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         if(s.isProjectOpen){
+            
+            anchor1.setVisible(true);
             //load current project in properties
             s.Load(s.CURRENT_OPEN_PROJECT);
             
             //updateUI
             UpdateUI(s.CURRENT_OPEN_PROJECT);
+        }
+        else{
+            anchor1.setVisible(false);
         }
     }    
 
@@ -354,6 +362,7 @@ public class FXMLDocumentController implements Initializable {
  
         if(projectFile != null){
             
+            anchor1.setVisible(true);
             s.Load(projectFile);
             
             s.LAST_PATH_OPENED = s.prop.getProperty(s.OP_S_LAST_PATH_OPENED);
