@@ -24,7 +24,7 @@ public class SmartGcc extends Application {
         SingletonApp s = SingletonApp.getInstance();
         s.stage = stage;
         Parent root;
-        
+
         if(s.profileExist()){
              root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         }
@@ -35,6 +35,7 @@ public class SmartGcc extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.sizeToScene();
         stage.show();
     }
 
