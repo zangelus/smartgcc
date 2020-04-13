@@ -202,20 +202,6 @@ public class UserOptionsController implements Initializable {
     }
 
     @FXML
-    private void handleBtnApply(ActionEvent event) {
-        
-        SingletonApp s   = SingletonApp.getInstance();
-        
-        Set<String> keys = change.stringPropertyNames();
-        for (String key : keys) {
-           s.prop.setProperty(key, change.getProperty(key));
-        }
-        
-        s.Save(s.CURRENT_OPEN_PROJECT);
-        goBack();
-    }
-
-    @FXML
     private void handleBtnCancel(ActionEvent event) {
         goBack();
     }
@@ -253,9 +239,45 @@ public class UserOptionsController implements Initializable {
             tCheckBox300_1 = chkbItem.isSelected();
             change.setProperty(s.OP_B_WARNING_PROFILE, tCheckBox300_1?"true":"false");
         }
+        else if(chkbItem.idProperty().getValue().equals("checkBox400_1")){
+            tCheckBox400_1 = chkbItem.isSelected();
+            change.setProperty(s.OP_B_V_checkBox400_1, tCheckBox400_1?"true":"false");
+            change.setProperty(s.OP_B_D_checkBox400_1, "false");
+        }
+        else if(chkbItem.idProperty().getValue().equals("checkBox400_2")){
+            tCheckBox400_2 = chkbItem.isSelected();
+            change.setProperty(s.OP_B_V_checkBox400_2, tCheckBox400_2?"true":"false");
+            change.setProperty(s.OP_B_D_checkBox400_2, "false");
+        }
+        else if(chkbItem.idProperty().getValue().equals("checkBox400_3")){
+            tCheckBox400_3 = chkbItem.isSelected();
+            change.setProperty(s.OP_B_V_checkBox400_3, tCheckBox400_3?"true":"false");
+            change.setProperty(s.OP_B_D_checkBox400_3, "false");
+        }
+        else if(chkbItem.idProperty().getValue().equals("checkBox400_4")){
+            tCheckBox400_4 = chkbItem.isSelected();
+            change.setProperty(s.OP_B_V_checkBox400_4, tCheckBox400_4?"true":"false");
+            change.setProperty(s.OP_B_D_checkBox400_4, "false");
+        }
         else if(chkbItem.idProperty().getValue().equals("checkBox500_1")){
             tCheckBox500_1 = chkbItem.isSelected();
             change.setProperty(s.OP_B_V_checkBox500_1, tCheckBox500_1?"true":"false");
+            change.setProperty(s.OP_B_D_checkBox500_1, "false");
+        }
+        else if(chkbItem.idProperty().getValue().equals("checkBox500_2")){
+            tCheckBox500_2 = chkbItem.isSelected();
+            change.setProperty(s.OP_B_V_checkBox500_2, tCheckBox500_2?"true":"false");
+            change.setProperty(s.OP_B_D_checkBox500_2, "false");
+        }
+        else if(chkbItem.idProperty().getValue().equals("checkBox500_3")){
+            tCheckBox500_3 = chkbItem.isSelected();
+            change.setProperty(s.OP_B_V_checkBox500_3, tCheckBox500_3?"true":"false");
+            change.setProperty(s.OP_B_D_checkBox500_3, "false");
+        }
+        else if(chkbItem.idProperty().getValue().equals("checkBox500_4")){
+            tCheckBox500_4 = chkbItem.isSelected();
+            change.setProperty(s.OP_B_V_checkBox500_4, tCheckBox500_4?"true":"false");
+            change.setProperty(s.OP_B_D_checkBox500_4, "false");
         }
         
         
@@ -287,5 +309,17 @@ public class UserOptionsController implements Initializable {
         }
     }
 
-
+    @FXML
+    private void handleBtnApply(ActionEvent event) {
+        
+        SingletonApp s   = SingletonApp.getInstance();
+        
+        Set<String> keys = change.stringPropertyNames();
+        for (String key : keys) {
+           s.prop.setProperty(key, change.getProperty(key));
+        }
+        
+        s.Save(s.CURRENT_OPEN_PROJECT);
+        goBack();
+    }
 }
