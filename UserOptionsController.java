@@ -34,7 +34,16 @@ public class UserOptionsController implements Initializable {
     boolean tCheckBox100_1;
     boolean tCheckBox100_2;
     boolean tCheckBox300_1;
+    
+    boolean tCheckBox400_1;
+    boolean tCheckBox400_2;
+    boolean tCheckBox400_3;
+    boolean tCheckBox400_4;
+
     boolean tCheckBox500_1;
+    boolean tCheckBox500_2;
+    boolean tCheckBox500_3;
+    boolean tCheckBox500_4;
     
     //text Files in the UI
     String tTextField100_2;
@@ -52,11 +61,26 @@ public class UserOptionsController implements Initializable {
     private CheckBox checkBox300_1;
     @FXML
     private ComboBox<String> comboBox300_1;
+    @FXML
+    private CheckBox checkBox500_1;
+    @FXML
+    private CheckBox checkBox400_1;
+    @FXML
+    private CheckBox checkBox400_2;
+    @FXML
+    private CheckBox checkBox400_3;
+    @FXML
+    private CheckBox checkBox400_4;
+    @FXML
+    private CheckBox checkBox500_4;
+    @FXML
+    private CheckBox checkBox500_3;
+    @FXML
+    private CheckBox checkBox500_2;
+    
     
     SingletonApp s = SingletonApp.getInstance();
     Properties change;
-    @FXML
-    private CheckBox checkBox500_1;
     /**
      * Initializes the controller class.
      * @param url
@@ -68,10 +92,29 @@ public class UserOptionsController implements Initializable {
        
        change = new Properties();
 
+       //page 1
        tCheckBox100_1   = s.getBoolValue(s.OP_B_CREATE_OBJECT_FILE);
        tCheckBox100_2   = s.getBoolValue(s.OP_B_OUTPUT_FILE_NAME);
+       
+       //page2
+       
+       //page3
        tCheckBox300_1   = s.getBoolValue(s.OP_B_WARNING_PROFILE);
-       tCheckBox500_1   = s.getBoolValue(s.OP_B_ENABLE_VERBOSE);
+       
+       //page4
+        tCheckBox400_1   = s.getBoolValue(s.OP_B_V_checkBox400_1);
+        tCheckBox400_2   = s.getBoolValue(s.OP_B_V_checkBox400_2);
+        tCheckBox400_3   = s.getBoolValue(s.OP_B_V_checkBox400_3);
+        tCheckBox400_4   = s.getBoolValue(s.OP_B_V_checkBox400_4);
+        
+       //page5
+       tCheckBox500_1   = s.getBoolValue(s.OP_B_V_checkBox500_1);
+       tCheckBox500_2   = s.getBoolValue(s.OP_B_V_checkBox500_2);
+       tCheckBox500_3   = s.getBoolValue(s.OP_B_V_checkBox500_3);
+       tCheckBox500_4   = s.getBoolValue(s.OP_B_V_checkBox500_4);
+       
+ 
+       
        tTextField100_2  = s.getTextValue(s.OP_S_OUTPUT_FILE_NAME);
 
        comboBox300_1.getItems()
@@ -87,11 +130,42 @@ public class UserOptionsController implements Initializable {
 
     private void updateUI() {
         
+        //page1
         checkBox100_1.setSelected(tCheckBox100_1);
+        
+        //page2 
         checkBox100_2.setSelected(tCheckBox100_2);
-        checkBox300_1.setSelected(tCheckBox300_1);
-        checkBox500_1.setSelected(tCheckBox500_1);
         textField100_2.setText(tTextField100_2);
+        
+        //page3
+        checkBox300_1.setSelected(tCheckBox300_1);
+        
+        //page4
+        checkBox400_1.setSelected(tCheckBox400_1);
+        checkBox400_2.setSelected(tCheckBox400_2);
+        checkBox400_3.setSelected(tCheckBox400_3);
+        checkBox400_4.setSelected(tCheckBox400_4);
+        
+        if(s.isOpeningUserOptions){
+            checkBox400_1.setDisable(s.getBoolValue(s.OP_B_D_checkBox400_1));
+            checkBox400_2.setDisable(s.getBoolValue(s.OP_B_D_checkBox400_2));
+            checkBox400_3.setDisable(s.getBoolValue(s.OP_B_D_checkBox400_3));
+            checkBox400_4.setDisable(s.getBoolValue(s.OP_B_D_checkBox400_4)); 
+        }
+
+        //page5
+        checkBox500_1.setSelected(tCheckBox500_1);
+        checkBox500_2.setSelected(tCheckBox500_2);
+        checkBox500_3.setSelected(tCheckBox500_3);
+        checkBox500_4.setSelected(tCheckBox500_4);
+        
+        if (s.isOpeningUserOptions) {
+            checkBox500_1.setDisable(s.getBoolValue(s.OP_B_D_checkBox500_1));
+            checkBox500_2.setDisable(s.getBoolValue(s.OP_B_D_checkBox500_2));
+            checkBox500_3.setDisable(s.getBoolValue(s.OP_B_D_checkBox500_3));
+            checkBox500_4.setDisable(s.getBoolValue(s.OP_B_D_checkBox500_4));
+        }
+        
     }
     
         
@@ -181,7 +255,7 @@ public class UserOptionsController implements Initializable {
         }
         else if(chkbItem.idProperty().getValue().equals("checkBox500_1")){
             tCheckBox500_1 = chkbItem.isSelected();
-            change.setProperty(s.OP_B_ENABLE_VERBOSE, tCheckBox500_1?"true":"false");
+            change.setProperty(s.OP_B_V_checkBox500_1, tCheckBox500_1?"true":"false");
         }
         
         

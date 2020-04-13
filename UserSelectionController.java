@@ -24,6 +24,8 @@ import javafx.stage.Stage;
  */
 public class UserSelectionController implements Initializable {
 
+    SingletonApp s = SingletonApp.getInstance();
+
     /**
      * Initializes the controller class.
      */
@@ -33,22 +35,75 @@ public class UserSelectionController implements Initializable {
     }    
 
     @FXML
-    private void handleNoviceBtn(ActionEvent event) throws IOException {
+    private void handleNoviceBtn(ActionEvent event) {
         
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        Scene scene = new Scene(root);
+        //page 4
+        s.prop.setProperty(s.OP_B_D_checkBox400_1            , "true");
+        s.prop.setProperty(s.OP_B_D_checkBox400_2            , "true");
+        s.prop.setProperty(s.OP_B_D_checkBox400_3            , "true");
+        s.prop.setProperty(s.OP_B_D_checkBox400_4            , "true");
         
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        //page 5
+        s.prop.setProperty(s.OP_B_D_checkBox500_1            , "true");
+        s.prop.setProperty(s.OP_B_D_checkBox500_2            , "true");
+        s.prop.setProperty(s.OP_B_D_checkBox500_3            , "true");
+        s.prop.setProperty(s.OP_B_D_checkBox500_4            , "true");
+        
+        goToMainWindow(event);
+        
     }
 
     @FXML
     private void handleIntermediateBtn(ActionEvent event) {
+        
+        //page 4
+        s.prop.setProperty(s.OP_B_D_checkBox400_1            , "false");
+        s.prop.setProperty(s.OP_B_D_checkBox400_2            , "false");
+        s.prop.setProperty(s.OP_B_D_checkBox400_3            , "false");
+        s.prop.setProperty(s.OP_B_D_checkBox400_4            , "false");
+        
+        //page 5
+        s.prop.setProperty(s.OP_B_D_checkBox500_1            , "true");
+        s.prop.setProperty(s.OP_B_D_checkBox500_2            , "true");
+        s.prop.setProperty(s.OP_B_D_checkBox500_3            , "true");
+        s.prop.setProperty(s.OP_B_D_checkBox500_4            , "true");
+        
+        goToMainWindow(event);
     }
 
     @FXML
     private void handleExpertBtn(ActionEvent event) {
+        
+        //page 4
+        s.prop.setProperty(s.OP_B_D_checkBox400_1            , "false");
+        s.prop.setProperty(s.OP_B_D_checkBox400_2            , "false");
+        s.prop.setProperty(s.OP_B_D_checkBox400_3            , "false");
+        s.prop.setProperty(s.OP_B_D_checkBox400_4            , "false");
+        
+        //page 5
+        s.prop.setProperty(s.OP_B_D_checkBox500_1            , "false");
+        s.prop.setProperty(s.OP_B_D_checkBox500_2            , "false");
+        s.prop.setProperty(s.OP_B_D_checkBox500_3            , "false");
+        s.prop.setProperty(s.OP_B_D_checkBox500_4            , "false");
+        
+        goToMainWindow(event);
     }
+
+    private void goToMainWindow(ActionEvent event) {
+        
+        boolean succ = s.Save(s.CURRENT_OPEN_PROJECT);
+        
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+            Scene scene = new Scene(root);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (IOException e) {
+            System.out.println("Problems opening the main window");
+        }
+    }
+    
+    
     
 }

@@ -25,7 +25,9 @@ public class SmartGcc extends Application {
         s.stage = stage;
         Parent root;
 
-        if(s.profileExist()){
+        s.CURRENT_OPEN_PROJECT = s.defaultProjctFile;
+        
+        if(s.profileExist()){ //creates the dafault profile here
              root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         }
         else{

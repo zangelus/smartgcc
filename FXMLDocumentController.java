@@ -70,6 +70,8 @@ public class FXMLDocumentController implements Initializable {
         else{
             anchor1.setVisible(false);
         }
+        
+        s.isOpeningUserOptions = false;
     }    
 
 
@@ -173,7 +175,7 @@ public class FXMLDocumentController implements Initializable {
         
         comm.add("g++");
         
-        if(s.getBoolValue(s.OP_B_ENABLE_VERBOSE)){
+        if(s.getBoolValue(s.OP_B_V_checkBox500_1)){
             comm.add("-v");
         }
         
@@ -248,22 +250,14 @@ public class FXMLDocumentController implements Initializable {
         String menuItemName = mItem.getText();
         
         if ("User Options".equalsIgnoreCase(menuItemName)) {
-            try{
-                if(s.LAST_PATH_OPENED.equals("")){
-                    generateAlert(s.NO_PROJECT_IS_OPEN);
-                    return;
-                }
-                Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
-                Scene scene = new Scene(root);
-                //Stage window = (Stage) menuBar.getScene().getWindow();
-                Stage window = s.stage;
-                window.setScene(scene);
-                window.show();
-            }
-            catch (Exception e){
-                System.out.println("Error opening FXML window");
-            }
+            
+            s.isOpeningUserOptions = true;
+            openUserOptionsWindow();
         }
+        else if("All Options".equalsIgnoreCase(menuItemName)){
+            s.isOpeningUserOptions = false;
+            openUserOptionsWindow();
+        } 
         else if("Build".equalsIgnoreCase(menuItemName)){
             build();
         } 
@@ -332,6 +326,24 @@ public class FXMLDocumentController implements Initializable {
             return true;
         }
         return false;
+    }
+
+    private void openUserOptionsWindow() {
+        try{
+                if(s.LAST_PATH_OPENED.equals("")){
+                    generateAlert(s.NO_PROJECT_IS_OPEN);
+                    return;
+                }
+                Parent root = FXMLLoader.load(getClass().getResource("UserOptions.fxml"));
+                Scene scene = new Scene(root);
+                //Stage window = (Stage) menuBar.getScene().getWindow();
+                Stage window = s.stage;
+                window.setScene(scene);
+                window.show();
+            }
+            catch (Exception e){
+                System.out.println("Error opening FXML window");
+            }
     }
     
     private enum FileType{
@@ -441,9 +453,4 @@ public class FXMLDocumentController implements Initializable {
        alert.showAndWait(); 
        return alert;
     }
-
-
-    
-
-
 }

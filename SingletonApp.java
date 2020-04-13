@@ -31,9 +31,29 @@ public class SingletonApp {
     public final String OP_B_WARNING_PROFILE        = "OP_B_WARNING_PROFILE";
     public final String OP_S_WARNING_PROFILE        = "OP_S_WARNING_PROFILE";
     
-    //page 5 - developper
-    public final String OP_B_ENABLE_VERBOSE         = "OP_B_ENABLE_VERBOSE";
+    //page 4 - code generation
+    public final String OP_B_V_checkBox400_1          = "OP_B_V_checkBox400_1";
+    public final String OP_B_V_checkBox400_2          = "OP_B_V_checkBox400_2";
+    public final String OP_B_V_checkBox400_3          = "OP_B_V_checkBox400_3";
+    public final String OP_B_V_checkBox400_4          = "OP_B_V_checkBox400_4";
     
+    public final String OP_B_D_checkBox400_1          = "OP_B_D_checkBox400_1";
+    public final String OP_B_D_checkBox400_2          = "OP_B_D_checkBox400_2";
+    public final String OP_B_D_checkBox400_3          = "OP_B_D_checkBox400_3";
+    public final String OP_B_D_checkBox400_4          = "OP_B_D_checkBox400_4";
+    
+    //page 5 - developper
+    public final String OP_B_V_checkBox500_1          = "OP_B_V_checkBox500_1";
+    public final String OP_B_V_checkBox500_2          = "OP_B_V_checkBox500_2";
+    public final String OP_B_V_checkBox500_3          = "OP_B_V_checkBox500_3";
+    public final String OP_B_V_checkBox500_4          = "OP_B_V_checkBox500_4";
+
+    public final String OP_B_D_checkBox500_1          = "OP_B_D_checkBox500_1";
+    public final String OP_B_D_checkBox500_2          = "OP_B_D_checkBox500_2";
+    public final String OP_B_D_checkBox500_3          = "OP_B_D_checkBox500_3";
+    public final String OP_B_D_checkBox500_4          = "OP_B_D_checkBox500_4";
+    
+
     //aditional
     public final String OP_S_LAST_PATH_OPENED       = "OP_S_LAST_PATH_OPENED";
     
@@ -44,6 +64,7 @@ public class SingletonApp {
     public String CURRENT_OPEN_PROJECT              = "";
     public Boolean isProjectOpen                    = false;
     public final String NO_PROJECT_IS_OPEN          = "No project is open. Open a project first!";
+    public Boolean isOpeningUserOptions    = false;
     
 
     //Const
@@ -184,7 +205,7 @@ public class SingletonApp {
     
     public void defaultSettings(){
 
-        File f  = new File(defaultProjctFile);
+        File f  = new File(CURRENT_OPEN_PROJECT);
         f.delete();
 
         //page 1
@@ -196,18 +217,35 @@ public class SingletonApp {
         prop.setProperty(OP_B_WARNING_PROFILE           , "false");
         prop.setProperty(OP_S_WARNING_PROFILE           , "");
         
-        //page 5
-        prop.setProperty(OP_B_ENABLE_VERBOSE            , "false");
+        //page 4
+        prop.setProperty(OP_B_V_checkBox400_1            , "false");
+        prop.setProperty(OP_B_V_checkBox400_2            , "false");
+        prop.setProperty(OP_B_V_checkBox400_3            , "false");
+        prop.setProperty(OP_B_V_checkBox400_4            , "false");
+        prop.setProperty(OP_B_D_checkBox400_1            , "false");
+        prop.setProperty(OP_B_D_checkBox400_2            , "false");
+        prop.setProperty(OP_B_D_checkBox400_3            , "false");
+        prop.setProperty(OP_B_D_checkBox400_4            , "false");
         
+        //page 5
+        prop.setProperty(OP_B_V_checkBox500_1            , "false");
+        prop.setProperty(OP_B_V_checkBox500_2            , "false");
+        prop.setProperty(OP_B_V_checkBox500_3            , "false");
+        prop.setProperty(OP_B_V_checkBox500_4            , "false");
+        prop.setProperty(OP_B_D_checkBox500_1            , "false");
+        prop.setProperty(OP_B_D_checkBox500_2            , "false");
+        prop.setProperty(OP_B_D_checkBox500_3            , "false");
+        prop.setProperty(OP_B_D_checkBox500_4            , "false");
+
         //Additional
         prop.setProperty(OP_S_LAST_PATH_OPENED          , "");
         
-        Save(defaultProjctFile);
+        Save(CURRENT_OPEN_PROJECT);
     }
     
     public Boolean profileExist(){
         
-        File f  = new File(defaultProjctFile);
+        File f  = new File(CURRENT_OPEN_PROJECT);
         if(!f.exists()){
             defaultSettings();
             return false;

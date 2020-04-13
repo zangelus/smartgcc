@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smartgcc.UserOptionsController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smartgcc.UserOptionsController">
    <children>
       <TabPane layoutY="31.0" prefHeight="312.0" prefWidth="601.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -44,14 +44,23 @@
             </Tab>
             <Tab text="Code Generation">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: black;" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: black;">
+                     <children>
+                        <CheckBox fx:id="checkBox400_1" layoutX="28.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" text="code generation feature 1" />
+                        <CheckBox fx:id="checkBox400_2" layoutX="28.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" text="code generation feature 2" />
+                        <CheckBox fx:id="checkBox400_3" layoutX="28.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" text="code generation feature 3" />
+                        <CheckBox fx:id="checkBox400_4" layoutX="28.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" text="code generation feature 4" />
+                     </children></AnchorPane>
                </content>
             </Tab>
             <Tab text="Developer options">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: black;">
                      <children>
-                        <CheckBox id="checkBox500_1" fx:id="checkBox500_1" layoutX="26.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" text="Enable verbose" />
+                        <CheckBox id="checkBox500_1" fx:id="checkBox500_1" layoutX="28.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" text="Enable verbose" />
+                        <CheckBox id="checkBox500_1" fx:id="checkBox500_4" layoutX="28.0" layoutY="114.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" text="Dev option feature 3" />
+                        <CheckBox id="checkBox500_1" fx:id="checkBox500_3" layoutX="28.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" text="Dev option feature 2" />
+                        <CheckBox id="checkBox500_1" fx:id="checkBox500_2" layoutX="28.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleCheckBoxAll" text="Dev option feature 1" />
                      </children></AnchorPane>
                </content>
             </Tab>
