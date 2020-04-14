@@ -2,119 +2,126 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smartgcc.UserSelectionController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smartgcc.UserSelectionController">
    <children>
-      <HBox layoutY="50.0" prefHeight="296.0" prefWidth="600.0">
+      <HBox layoutY="59.0" prefHeight="287.0" prefWidth="600.0">
          <children>
             <VBox prefHeight="414.0" prefWidth="200.0">
                <children>
                   <AnchorPane prefHeight="39.0" prefWidth="200.0">
                      <children>
-                        <Label alignment="CENTER" layoutX="19.0" prefHeight="60.0" prefWidth="153.0" style="-fx-border-color: black;" text="Novice" textAlignment="CENTER" textFill="#477cd1">
+                        <Label alignment="CENTER" layoutX="27.0" layoutY="13.0" prefHeight="52.0" prefWidth="145.0" style="-fx-border-color: black;" text="Novice" textAlignment="CENTER" textFill="#477cd1">
                            <font>
-                              <Font name="Arial" size="32.0" />
+                              <Font name="Arial" size="26.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
                   <Label alignment="CENTER" prefHeight="44.0" prefWidth="200.0" text="Compiler Options" textAlignment="CENTER" textFill="#6b6b6b">
                      <font>
-                        <Font name="Arial" size="20.0" />
+                        <Font name="Arial" size="16.0" />
                      </font>
                   </Label>
                   <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" text="Linking Options" textAlignment="CENTER" textFill="#6b6b6b">
                      <font>
-                        <Font name="Arial" size="20.0" />
+                        <Font name="Arial" size="16.0" />
                      </font>
                   </Label>
                   <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Debugging Options" textAlignment="CENTER" textFill="#6b6b6b">
                      <font>
-                        <Font name="Arial" size="20.0" />
+                        <Font name="Arial" size="16.0" />
                      </font>
                   </Label>
-                  <AnchorPane prefHeight="130.0" prefWidth="200.0" />
                </children>
             </VBox>
+            <Separator opacity="0.5" orientation="VERTICAL" prefHeight="317.0" prefWidth="5.0" style="-fx-background-color: black;" />
             <VBox prefHeight="414.0" prefWidth="200.0">
                <children>
                   <AnchorPane prefHeight="53.0" prefWidth="200.0">
                      <children>
-                        <Label alignment="CENTER" layoutX="14.0" prefHeight="60.0" prefWidth="174.0" style="-fx-border-color: black;" text="Intermediate" textAlignment="CENTER" textFill="#477cd1">
+                        <Label alignment="CENTER" layoutX="20.0" layoutY="11.0" prefHeight="52.0" prefWidth="161.0" style="-fx-border-color: black;" text="Typical" textAlignment="CENTER" textFill="#477cd1">
                            <font>
-                              <Font name="Arial" size="30.0" />
+                              <Font name="Arial" size="26.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
                   <Label alignment="CENTER" prefHeight="44.0" prefWidth="200.0" text="Compiler Options" textAlignment="CENTER" textFill="#6b6b6b">
                      <font>
-                        <Font name="Arial" size="20.0" />
+                        <Font name="Arial" size="16.0" />
                      </font>
                   </Label>
                   <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" text="Linking Options" textAlignment="CENTER" textFill="#6b6b6b">
                      <font>
-                        <Font name="Arial" size="20.0" />
+                        <Font name="Arial" size="16.0" />
                      </font>
                   </Label>
                   <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Debugging Options" textAlignment="CENTER" textFill="#6b6b6b">
                      <font>
-                        <Font name="Arial" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Code Genration" textAlignment="CENTER" textFill="#6b6b6b">
-                     <font>
-                        <Font name="Arial" size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox prefHeight="414.0" prefWidth="200.0">
-               <children>
-                  <AnchorPane prefHeight="52.0" prefWidth="200.0">
-                     <children>
-                        <Label alignment="CENTER" layoutX="26.0" prefHeight="60.0" prefWidth="137.0" style="-fx-border-color: black;" text="Expert" textAlignment="CENTER" textFill="#477cd1">
-                           <font>
-                              <Font name="Arial" size="32.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <Label alignment="CENTER" prefHeight="44.0" prefWidth="200.0" text="Compiler Options" textAlignment="CENTER" textFill="#6b6b6b">
-                     <font>
-                        <Font name="Arial" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" text="Linking Options" textAlignment="CENTER" textFill="#6b6b6b">
-                     <font>
-                        <Font name="Arial" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Debugging Options" textAlignment="CENTER" textFill="#6b6b6b">
-                     <font>
-                        <Font name="Arial" size="20.0" />
+                        <Font name="Arial" size="16.0" />
                      </font>
                   </Label>
                   <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Code Generation" textAlignment="CENTER" textFill="#6b6b6b">
                      <font>
-                        <Font name="Arial" size="20.0" />
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Separator opacity="0.5" orientation="VERTICAL" prefHeight="208.0" prefWidth="1.0" style="-fx-background-color: black;" />
+            <VBox prefHeight="414.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane prefHeight="52.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="26.0" layoutY="7.0" prefHeight="52.0" prefWidth="137.0" style="-fx-border-color: black;" text="Expert" textAlignment="CENTER" textFill="#477cd1">
+                           <font>
+                              <Font name="Arial" size="26.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <Label alignment="CENTER" prefHeight="44.0" prefWidth="200.0" text="Compiler Options" textAlignment="CENTER" textFill="#6b6b6b">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" text="Linking Options" textAlignment="CENTER" textFill="#6b6b6b">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Debugging Options" textAlignment="CENTER" textFill="#6b6b6b">
+                     <font>
+                        <Font name="Arial" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Code Generation" textAlignment="CENTER" textFill="#6b6b6b">
+                     <font>
+                        <Font name="Arial" size="16.0" />
                      </font>
                   </Label>
                   <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Developer options" textAlignment="CENTER" textFill="#6b6b6b">
                      <font>
-                        <Font name="Arial" size="20.0" />
+                        <Font name="Arial" size="16.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
          </children>
       </HBox>
-      <Button id="SelectNoviceBtn" layoutX="34.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleNoviceBtn" prefHeight="30.0" prefWidth="137.0" text="Select" />
-      <Button id="SelectIntermidiateBtn" layoutX="232.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleIntermediateBtn" prefHeight="30.0" prefWidth="137.0" text="Select" />
-      <Button id="SelectExpertBtn" layoutX="432.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleExpertBtn" prefHeight="30.0" prefWidth="137.0" text="Select" />
+      <Button id="SelectNoviceBtn" layoutX="34.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleNoviceBtn" prefHeight="30.0" prefWidth="137.0" text="Select" />
+      <Button id="SelectIntermidiateBtn" layoutX="232.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleIntermediateBtn" prefHeight="30.0" prefWidth="137.0" text="Select" />
+      <Button id="SelectExpertBtn" layoutX="432.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleExpertBtn" prefHeight="30.0" prefWidth="137.0" text="Select" />
+      <Label layoutX="185.0" layoutY="9.0" text="Select the User Role" textFill="#477cd1">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
