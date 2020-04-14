@@ -46,8 +46,7 @@ public class GccCommand {
             b.join();
 
             processExitCode = proc.waitFor();
-            
-            
+
             error = errorStream.getValue();
             output = outputStream.getValue();
             

@@ -87,21 +87,31 @@ public class FXMLDocumentController implements Initializable {
 
     private void build(){
         
+        listview2.getItems().clear();
+        
         String[] cmd1 = getGccCommand();
         s.LAST_GCC_COMMAND = getStringGccCommand(cmd1);
         textfield1.setText(s.LAST_GCC_COMMAND);
 
-        listview2.getItems().add("Start: Build a project using g++");
+        listview2.getItems().add("Build started using file: " + s.LAST_PATH_OPENED );
 
         GccCommand gccCmd = new GccCommand();
         int retValue = gccCmd.ExecutedCommand1(cmd1);
-
-        listview2.getItems().add("ExitValue: " + retValue);
-        listview2.getItems().add(gccCmd.GetOutput());
-        
-        if(retValue != 0){
-            listview2.getItems().add(gccCmd.GetError());
+        if(retValue == 0){
+            listview2.getItems().add("Build was succesfull");
         }
+        else{
+            listview2.getItems().add("Build failed");
+        }
+        String output_result = gccCmd.GetOutput();
+        if(!output_result.equals("")){
+            listview2.getItems().add(output_result);
+        }
+        String error_result = gccCmd.GetError();
+        if(!error_result.equals("")){
+            listview2.getItems().add("Verbose: " +error_result);
+        }
+        listview2.getItems().add("Build finished");
         
         System.out.println("ExitValue: " + retValue);
     }
@@ -146,10 +156,6 @@ public class FXMLDocumentController implements Initializable {
 
             File directory = new File(parentDirectory);
             directory.mkdirs();
-//            if (!directory.exists()){
-//                new File("/path/directory").mkdirs();
-//                directory.mkdir();
-//            }
             return directory.getAbsolutePath() + "\\";
         }
         return null;
