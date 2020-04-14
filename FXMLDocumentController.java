@@ -145,10 +145,12 @@ public class FXMLDocumentController implements Initializable {
             String parentDirectory = mainFile.getParent() + (bin?"\\bin":"\\debug");
 
             File directory = new File(parentDirectory);
-            if (! directory.exists()){
-                directory.mkdir();
-            }
-            return parentDirectory + "\\";
+            directory.mkdirs();
+//            if (!directory.exists()){
+//                new File("/path/directory").mkdirs();
+//                directory.mkdir();
+//            }
+            return directory.getAbsolutePath() + "\\";
         }
         return null;
         
