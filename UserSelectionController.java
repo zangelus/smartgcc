@@ -49,7 +49,7 @@ public class UserSelectionController implements Initializable {
         s.prop.setProperty(s.OP_B_D_checkBox500_3            , "true");
         s.prop.setProperty(s.OP_B_D_checkBox500_4            , "true");
         
-        goToMainWindow(event);
+        goToMainWindow(event, "Beginer");
         
     }
 
@@ -68,7 +68,7 @@ public class UserSelectionController implements Initializable {
         s.prop.setProperty(s.OP_B_D_checkBox500_3            , "true");
         s.prop.setProperty(s.OP_B_D_checkBox500_4            , "true");
         
-        goToMainWindow(event);
+        goToMainWindow(event, "Intermediate");
     }
 
     @FXML
@@ -86,10 +86,10 @@ public class UserSelectionController implements Initializable {
         s.prop.setProperty(s.OP_B_D_checkBox500_3            , "false");
         s.prop.setProperty(s.OP_B_D_checkBox500_4            , "false");
         
-        goToMainWindow(event);
+        goToMainWindow(event, "Expert");
     }
 
-    private void goToMainWindow(ActionEvent event) {
+    private void goToMainWindow(ActionEvent event,String title) {
         
         boolean succ = s.Save(s.CURRENT_OPEN_PROJECT);
         
@@ -98,6 +98,7 @@ public class UserSelectionController implements Initializable {
             Scene scene = new Scene(root);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(scene);
+            window.setTitle("SmartGcc - " + title + " profile");
             window.show();
         } catch (IOException e) {
             System.out.println("Problems opening the main window");
