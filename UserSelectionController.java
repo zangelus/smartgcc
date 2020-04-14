@@ -49,7 +49,7 @@ public class UserSelectionController implements Initializable {
         s.prop.setProperty(s.OP_B_D_checkBox500_3            , "true");
         s.prop.setProperty(s.OP_B_D_checkBox500_4            , "true");
         
-        goToMainWindow(event, "Beginer");
+        goToMainWindow(event, "Novice");
         
     }
 
@@ -68,7 +68,7 @@ public class UserSelectionController implements Initializable {
         s.prop.setProperty(s.OP_B_D_checkBox500_3            , "true");
         s.prop.setProperty(s.OP_B_D_checkBox500_4            , "true");
         
-        goToMainWindow(event, "Intermediate");
+        goToMainWindow(event, "Typical");
     }
 
     @FXML
