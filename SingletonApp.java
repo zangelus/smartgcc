@@ -65,7 +65,7 @@ public class SingletonApp extends Observable{
     public String LAST_GCC_COMMAND                  = "";
     public String CURRENT_OPEN_PROJECT              = "";
     public Boolean isProjectOpen                    = false;
-    public final String NO_PROJECT_IS_OPEN          = "No project is open. Open a project first!";
+    public final String NO_PROJECT_IS_OPEN          = "The project isn't  open yet. Please try opening the project first!";
     public Boolean isOpeningUserOptions    = false;
     
 
