@@ -49,6 +49,9 @@ public class UserSelectionController implements Initializable {
         s.prop.setProperty(s.OP_B_D_checkBox500_3            , "true");
         s.prop.setProperty(s.OP_B_D_checkBox500_4            , "true");
         
+        s.prop.setProperty(s.OP_S_PROFILE                    , "Beginer");
+                
+        
         goToMainWindow(event, "Beginer");
         
     }
@@ -67,7 +70,7 @@ public class UserSelectionController implements Initializable {
         s.prop.setProperty(s.OP_B_D_checkBox500_2            , "true");
         s.prop.setProperty(s.OP_B_D_checkBox500_3            , "true");
         s.prop.setProperty(s.OP_B_D_checkBox500_4            , "true");
-        
+        s.prop.setProperty(s.OP_S_PROFILE                    , "Intermediate");
         goToMainWindow(event, "Intermediate");
     }
 
@@ -85,7 +88,7 @@ public class UserSelectionController implements Initializable {
         s.prop.setProperty(s.OP_B_D_checkBox500_2            , "false");
         s.prop.setProperty(s.OP_B_D_checkBox500_3            , "false");
         s.prop.setProperty(s.OP_B_D_checkBox500_4            , "false");
-        
+        s.prop.setProperty(s.OP_S_PROFILE                    , "Expert");
         goToMainWindow(event, "Expert");
     }
 

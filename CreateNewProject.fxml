@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: #d9f8fa; -fx-border-color: Gray; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smartgcc.CreateNewProjectController">
+   <children>
+      <Label layoutX="28.0" layoutY="22.0" prefHeight="27.0" prefWidth="267.0" text="Create new project">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Button layoutX="28.0" layoutY="74.0" mnemonicParsing="false" onAction="#handleBrowse" text="Browse" />
+      <Button layoutX="333.0" layoutY="136.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="52.0" text="Save" />
+      <TextField fx:id="textfield1" layoutX="92.0" layoutY="74.0" prefHeight="25.0" prefWidth="293.0" promptText="browse c++ file" style="-fx-background-color: white;" />
+      <Button layoutX="271.0" layoutY="136.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+   </children>
+</AnchorPane>

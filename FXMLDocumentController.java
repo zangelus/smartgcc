@@ -9,9 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,6 +25,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
@@ -31,13 +36,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 /**
  *
  * @author zange
  */
-public class FXMLDocumentController implements Initializable {
+public class FXMLDocumentController implements Initializable, Observer {
     
     @FXML
     private TextField textfield1;
@@ -55,9 +63,17 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private AnchorPane anchor1;
 
+//    public static Stage primaryStage;
+//    
+//    public void start(Stage primaryStage) {
+//        FXMLDocumentController.primaryStage = primaryStage;
+//    }
+//    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        s.addObserver(this);
+
         if(s.isProjectOpen){
             
             anchor1.setVisible(true);
@@ -273,7 +289,90 @@ public class FXMLDocumentController implements Initializable {
             s.defaultSettings();
         }
         else if("New Project".equalsIgnoreCase(menuItemName)){
-            CreteNewProject();
+            
+            try{
+                Parent root = FXMLLoader.load(getClass().getResource("CreateNewProject.fxml"));
+                Dialog dialog  = new Dialog();
+
+//                dialog.setOnHidden(new EventHandler<DialogEvent>() {
+//                    @Override
+//                    public void handle(DialogEvent event) {
+//                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                    }
+//                });
+//                
+//                dialog.setOnCloseRequest(new EventHandler<DialogEvent>() {
+//                    @Override
+//                    public void handle(DialogEvent event) {
+//                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                    }
+//         
+//                });     
+                dialog.getDialogPane().setContent(root);
+                dialog.initStyle(StageStyle.TRANSPARENT);
+                dialog.show();
+                
+                //CreteNewProject();
+            }
+            
+            catch (Exception e){
+                System.out.println("Error opening FXML window");
+            }
+
+            
+                
+//                Scene scene = new Scene(root);
+//                Stage window = s.stage;
+//                window.setScene(scene);
+//                window.initModality(Modality.WINDOW_MODAL);
+//                window.setAlwaysOnTop(true);
+//                
+//                window.setOnHidden(new EventHandler<WindowEvent>() {
+//
+////                    @Override
+////                    public void handle(DialogEvent event) {
+////                        Platform.runLater(new Runnable() {
+////                            @Override
+////                            public void run() {
+////                                LoadNewProject();
+////                                System.exit(0);
+////                            }
+////                        });
+////                    }
+//
+//                    @Override
+//                    public void handle(WindowEvent event) {
+//                        LoadNewProject();
+//                    }
+//                });
+//
+//                window.show();
+
+
+//             final Stage myDialog = new Stage();
+//             myDialog.initModality(Modality.WINDOW_MODAL);
+//           
+//             Button okButton = new Button("CLOSE");
+//             okButton.setOnAction(new EventHandler<ActionEvent>(){
+// 
+//                 @Override
+//                 public void handle(ActionEvent arg0) {
+//                     myDialog.close();
+//                 }
+//               
+//             });
+//           
+//             Scene myDialogScene = new Scene(VBoxBuilder.create()
+//                     .children(new Text("Hello! it's My Dialog."), okButton)
+//                     .alignment(Pos.CENTER)
+//                     .padding(new Insets(10))
+//                     .build());
+//           
+//             myDialog.setScene(myDialogScene);
+//             myDialog.show();
+//
+//            }
+
         }
         else if("Open Project".equalsIgnoreCase(menuItemName)){
             
@@ -321,7 +420,20 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
-    private Boolean LoadNewProject(File projectFile) {
+     public Boolean LoadNewProject() {
+
+        if (s.CURRENT_OPEN_PROJECT != null) {
+            //Keep project file in memory
+            //Load the project in the UI
+            if (UpdateUI(s.CURRENT_OPEN_PROJECT)) {
+                s.isProjectOpen = true;
+            }
+            return true;
+        }
+        return false;
+    }
+     
+    public Boolean LoadNewProject(File projectFile) {
 
         if (projectFile != null) {
             //Keep project file in memory
@@ -352,6 +464,11 @@ public class FXMLDocumentController implements Initializable {
             catch (Exception e){
                 System.out.println("Error opening FXML window");
             }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        this.LoadNewProject();
     }
     
     private enum FileType{

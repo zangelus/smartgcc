@@ -38,6 +38,7 @@ public class SmartGcc extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.sizeToScene();
+        stage.setTitle("SmartGcc - " + s.getTextValue(s.OP_S_PROFILE) + " profile");
         stage.show();
     }
 

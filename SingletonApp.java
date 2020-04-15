@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import static java.lang.System.getProperty;
 import java.nio.file.Files;
+import java.util.Observable;
 import java.util.Properties;
 import javafx.stage.Stage;
 
@@ -20,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author zange
  */
-public class SingletonApp {
+public class SingletonApp extends Observable{
     
     //page 1 - compiling
     public final String OP_S_OUTPUT_FILE_NAME       = "OP_S_OUTPUT_FILE_NAME";
@@ -56,6 +57,7 @@ public class SingletonApp {
 
     //aditional
     public final String OP_S_LAST_PATH_OPENED       = "OP_S_LAST_PATH_OPENED";
+    public final String OP_S_PROFILE                = "OP_S_PROFILE";
     
     
     //others
@@ -239,7 +241,8 @@ public class SingletonApp {
 
         //Additional
         prop.setProperty(OP_S_LAST_PATH_OPENED          , "");
-        
+        prop.setProperty(OP_S_PROFILE                   , "");
+
         Save(CURRENT_OPEN_PROJECT);
     }
     
@@ -252,4 +255,11 @@ public class SingletonApp {
         }
         return true;
     }
+
+    public void setNews() {
+        setChanged();
+        notifyObservers();
+    }
+    
+    
 }
